@@ -20,20 +20,34 @@ public class ConnectionHelper {
 		this.url = url;
 	}
 	
+	public List<String> get() {
+		return this.get((String[]) null);
+	}
+	
 	/**
 	 * Fetches data from rest api.
 	 * @return All fetched data. Returns null if an exception occurred.
 	 */
-	public List<String> get() {
+	public List<String> get(String...param) {
 		BufferedReader br = null;
 		List<String> list = new LinkedList<>();
 		String line;
 		try {
-			conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
+			URL urlWithParams;
+			if(param != null) {
+				StringBuilder builder = new StringBuilder();
+				for(int i = 0;i<param.length;i++) {
+					builder.append(String.format("?param%d=%s", i, param[i]));
+				}
+				urlWithParams = new URL(url.getPath()+builder.toString());
+			} else {
+				urlWithParams = url;
+			}
 			/*
-			 * TODO set return type
+			 * 
 			 */
+			conn = (HttpURLConnection) urlWithParams.openConnection();
+			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "application/json");
 			/*
 			if(conn.getResponseCode() != 200) {
