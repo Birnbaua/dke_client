@@ -1,28 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ButtonBar?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </top>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="birnbaua.dke_pr_client.PrimaryController">
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
           <Tab text="Student">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                     <left>
+                        <VBox prefHeight="356.0" prefWidth="225.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Student details" />
+                           </children>
+                        </VBox>
+                     </left>
+                     <center>
+                        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <HBox alignment="TOP_CENTER" prefHeight="33.0" prefWidth="332.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Enrolled Studies">
+                                       <font>
+                                          <Font size="21.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <Separator prefWidth="200.0" />
+                              <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="332.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select Study: " />
+                                    <ChoiceBox fx:id="studies" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </center>
+                  </BorderPane>
+               </content>
           </Tab>
           <Tab text="My Courses">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <top>
+                        <ToolBar prefWidth="200.0" BorderPane.alignment="TOP_RIGHT">
+                           <items>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search: " />
+                              <TextField fx:id="searchMyCourses" />
+                           </items>
+                        </ToolBar>
+                     </top>
+                     <center>
+                        <TableView fx:id="myCourses" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+               </content>
           </Tab>
             <Tab text="Enroll">
               <content>
@@ -32,4 +82,18 @@
         </tabs>
       </TabPane>
    </center>
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <items>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Student: " />
+            <Text fx:id="name" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Name&gt;" />
+            <Separator orientation="VERTICAL" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username: " />
+            <Text fx:id="matrNr" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Matr. Nr&gt;" />
+            <Separator orientation="VERTICAL" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="University: " />
+            <Text fx:id="university" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Uni&gt;" />
+         </items>
+      </ToolBar>
+   </top>
 </BorderPane>
