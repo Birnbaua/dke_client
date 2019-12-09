@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
@@ -71,6 +72,13 @@
                      <center>
                         <TableView fx:id="myCourses" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                      </center>
+                     <bottom>
+                        <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <items>
+                            <Button mnemonicParsing="false" onAction="#onSaveMyCourses" text="Save Changes" />
+                          </items>
+                        </ToolBar>
+                     </bottom>
                   </BorderPane>
                </content>
           </Tab>

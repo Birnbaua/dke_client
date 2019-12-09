@@ -20,6 +20,11 @@ public class Course {
 		this.ects = new SimpleFloatProperty(ects);
 		this.isEnrolledBy = new SimpleBooleanProperty(isEnrolledBy);
 	}
+	
+	public Course() {
+		this("unknown","unknown","unknown","unknown",0,false);
+	}
+	
 
 	public SimpleStringProperty getTitle() {
 		return title;

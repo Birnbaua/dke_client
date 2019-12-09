@@ -5,21 +5,29 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class JsonHelper {
+public class JsonHelper<T> {
 	
-	public static <T> String getJsonFrom(T object) {
+	public String getJsonFrom(T object) {
 		return new Gson().toJson(object);
 	}
 	
-	public static <T> String getJsonFrom(List<T> objects) {
+	public String getJsonFrom(List<T> objects) {
 		return new Gson().toJson(objects);
 	}
 	
-	public static <T> T getObjectFrom(String json, Class<T> c) {
+	public T getObjectFrom(String json, Class<T> c) {
 		return new Gson().fromJson(json, c);
 	}
 	
-	public static <T> List<T> getObjectsFrom(String json, Class<T> c) {
+	public List<T> getObjectsFrom(String json, Class<T> c) {
 		return new Gson().fromJson(json, new TypeToken<List<T>>() {}.getType());
+	}
+	
+	public String parseList(List<String> list) {
+		StringBuilder builder = new StringBuilder();
+		for(String str : list) {
+			builder.append(str);
+		}
+		return builder.toString();
 	}
 }

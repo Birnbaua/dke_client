@@ -9,6 +9,7 @@ import java.util.Properties;
 import birnbaua.dke_pr_client.basics.Course;
 import birnbaua.dke_pr_client.basics.University;
 import birnbaua.dke_pr_client.rest.ConnectionHelper;
+import birnbaua.dke_pr_client.rest.RestCall;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
@@ -25,17 +26,25 @@ public class PrimaryController {
     @FXML private Text name;
     @FXML private Text matrNr;
     @FXML private Text university;
-    private Properties properties = new Properties();
+    private RestCall rest;
 
     @FXML
+    void onSaveMyCourses() {
+    	
+    }
+    
+    @FXML
     void initialize() {
+    	Properties properties = new Properties();
     	try {
-			properties.load(new FileInputStream(new File(App.class.getResource("settings.properties").getPath()).getAbsolutePath()));
+    		properties.load(new FileInputStream(new File(App.class.getResource("settings.properties").getPath()).getAbsolutePath()));
+			
 		} catch (IOException e) {e.printStackTrace();} 
+    	rest = new RestCall(properties);
     	courseTableSetup(myCourses);
     	myCourses.getItems().add(new Course("weihnachtsmensa","6969","max muehler","drangln",6,false));
     }
-    
+   
     @SuppressWarnings("unchecked")
 	private void courseTableSetup(TableView<Course> table) {
     	TableColumn<Course,String> title = new TableColumn<>("Title");
@@ -63,7 +72,6 @@ public class PrimaryController {
     	isEnrolledBy.setCellValueFactory(value -> value.getValue().getIsEnrolledBy());
     	
     	isEnrolledBy.setCellFactory(CheckBoxTableCell.forTableColumn(isEnrolledBy));
-    	
     	table.getColumns().addAll(title,id,type,ects,lector,isEnrolledBy);
     }
 }
