@@ -44,7 +44,8 @@ public class PrimaryController {
     
     @FXML
     void onRefresh() {
-    	rest.getCourses("");
+    	courses.getItems().clear();
+    	courses.getItems().addAll(rest.getCourses("vl"));
     }
     
     @FXML
@@ -56,6 +57,7 @@ public class PrimaryController {
 		} catch (IOException e) {e.printStackTrace();} 
     	rest = new RestCall(properties);
     	courseTableSetup(myCourses);
+    	courseTableSetup(courses);
     	myCourses.getItems().add(new Course("weihnachtsmensa","6969","max muehler","drangln",6,false));
     }
    
@@ -78,7 +80,7 @@ public class PrimaryController {
     	lector.setPrefWidth(50);
     	isEnrolledBy.setPrefWidth(50);
     	
-    	title.setCellValueFactory(value -> value.getValue().getTitle());
+    	title.setCellValueFactory(value -> value.getValue().getName());
     	id.setCellValueFactory(value -> value.getValue().getId());
     	type.setCellValueFactory(value -> value.getValue().getType());
     	ects.setCellValueFactory(value -> value.getValue().getEcts());

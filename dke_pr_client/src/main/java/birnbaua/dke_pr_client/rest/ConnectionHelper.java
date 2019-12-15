@@ -39,10 +39,12 @@ public class ConnectionHelper {
 				for(int i = 0;i<param.length;i++) {
 					builder.append(String.format("/%s", param[i]));
 				}
-				urlWithParams = new URL(url.getPath()+builder.toString());
+				System.out.print(url.toString()+builder.toString());
+				urlWithParams = new URL(url.toString()+builder.toString());
 			} else {
 				urlWithParams = url;
 			}
+			
 			/*
 			 * 
 			 */
@@ -66,7 +68,9 @@ public class ConnectionHelper {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally {
-			try {br.close();} catch (IOException e) {e.printStackTrace();}
+			if(br != null) {
+				try {br.close();} catch (IOException e) {e.printStackTrace();}
+			}
 			conn.disconnect();
 		}
 		return list;

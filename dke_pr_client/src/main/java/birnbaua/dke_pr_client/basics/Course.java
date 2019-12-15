@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Course {
-	private SimpleStringProperty title;
+	private SimpleStringProperty name;
 	private SimpleStringProperty id;
 	private SimpleStringProperty lector;
 	private SimpleStringProperty type;
@@ -13,7 +13,7 @@ public class Course {
 	private SimpleBooleanProperty isEnrolledBy;
 	
 	public Course(String title, String id, String lector, String type, float ects, boolean isEnrolledBy) {
-		this.title = new SimpleStringProperty(title);
+		this.name = new SimpleStringProperty(title);
 		this.id = new SimpleStringProperty(id);
 		this.lector = new SimpleStringProperty(lector);
 		this.type = new SimpleStringProperty(type);
@@ -21,17 +21,21 @@ public class Course {
 		this.isEnrolledBy = new SimpleBooleanProperty(isEnrolledBy);
 	}
 	
+	public Course(String name) {
+		this(name,"unknown","unknown","unknown",0,false);
+	}
+	
 	public Course() {
 		this("unknown","unknown","unknown","unknown",0,false);
 	}
 	
 
-	public SimpleStringProperty getTitle() {
-		return title;
+	public SimpleStringProperty getName() {
+		return name;
 	}
 
-	public void setTitle(SimpleStringProperty name) {
-		this.title = name;
+	public void setName(SimpleStringProperty name) {
+		this.name = name;
 	}
 
 	public SimpleStringProperty getId() {

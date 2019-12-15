@@ -22,10 +22,11 @@ public class RestCall {
 	public List<Course> getCourses(String...params) {
 		URL url = null;
 		try {
-			url = new URL(properties.get("server").toString()+properties.get("course").toString());
+			url = new URL(String.format("%s%s", properties.get("server").toString().replace("\"", ""),properties.get("courses").toString().replace("\"", "")));
 		} catch (MalformedURLException e) {e.printStackTrace();}
 		ConnectionHelper connHelp = new ConnectionHelper(url);
 		JsonHelper<Course> json = new JsonHelper<>();
-		return json.getObjectsFrom(json.parseList(connHelp.get(params)), Course.class);
+		//return json.getObjectsFrom(json.parseList(connHelp.get(params)), Course.class);
+		return json.getCoursesFrom(json.parseList(connHelp.get(params)));
 	}
 }

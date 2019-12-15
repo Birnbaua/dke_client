@@ -1,9 +1,12 @@
 package birnbaua.dke_pr_client.json;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import birnbaua.dke_pr_client.basics.Course;
 
 public class JsonHelper<T> {
 	
@@ -23,6 +26,19 @@ public class JsonHelper<T> {
 		return new Gson().fromJson(json, new TypeToken<List<T>>() {}.getType());
 	}
 	
+	public List<Course> getCoursesFrom(String json){
+		List<Course> courses = new LinkedList<>();
+		for(String str : json.split(",")) {
+			str = str.replace("[", "");
+			str = str.replace("]", "");
+			str = str.replace("{", "");
+			str = str.replace("}", "");
+			courses.add(new Course(str.split(":")[1]));
+		}
+		return courses;
+		//return new Gson().fromJson(json, new TypeToken<List<Course>>() {}.getType());
+	}
+	
 	public String parseList(List<String> list) {
 		StringBuilder builder = new StringBuilder();
 		for(String str : list) {
@@ -30,4 +46,5 @@ public class JsonHelper<T> {
 		}
 		return builder.toString();
 	}
+	
 }
