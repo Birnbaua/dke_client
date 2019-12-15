@@ -9,7 +9,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -83,9 +82,29 @@
                </content>
           </Tab>
             <Tab text="Enroll">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <top>
+                        <ToolBar prefWidth="200.0" BorderPane.alignment="TOP_RIGHT">
+                           <items>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search: " />
+                              <TextField fx:id="searchCoursesRest" />
+                              <Button fx:id="refreshSearchResults" mnemonicParsing="false" onAction="#onRefresh" text="Refresh Results" />
+                           </items>
+                        </ToolBar>
+                     </top>
+                     <center>
+                        <TableView fx:id="courses" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                     </center>
+                     <bottom>
+                        <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <items>
+                              <Button mnemonicParsing="false" onAction="#onSaveCourses" text="Save Changes" />
+                           </items>
+                        </ToolBar>
+                     </bottom>
+                  </BorderPane>
+               </content>
             </Tab>
         </tabs>
       </TabPane>

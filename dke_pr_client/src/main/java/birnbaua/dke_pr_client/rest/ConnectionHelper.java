@@ -37,7 +37,7 @@ public class ConnectionHelper {
 			if(param != null) {
 				StringBuilder builder = new StringBuilder();
 				for(int i = 0;i<param.length;i++) {
-					builder.append(String.format("?param%d=%s", i, param[i]));
+					builder.append(String.format("/%s", param[i]));
 				}
 				urlWithParams = new URL(url.getPath()+builder.toString());
 			} else {

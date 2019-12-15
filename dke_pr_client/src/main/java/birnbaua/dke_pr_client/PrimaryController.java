@@ -11,6 +11,7 @@ import birnbaua.dke_pr_client.basics.University;
 import birnbaua.dke_pr_client.rest.ConnectionHelper;
 import birnbaua.dke_pr_client.rest.RestCall;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -23,6 +24,9 @@ public class PrimaryController {
     @FXML private ChoiceBox<University> studies;
     @FXML private TextField searchMyCourses;
     @FXML private TableView<Course> myCourses;
+    @FXML private TextField searchCoursesRest;
+    @FXML private Button refreshSearchResults;
+    @FXML private TableView<Course> courses;
     @FXML private Text name;
     @FXML private Text matrNr;
     @FXML private Text university;
@@ -31,6 +35,16 @@ public class PrimaryController {
     @FXML
     void onSaveMyCourses() {
     	
+    }
+    
+    @FXML
+    void onSaveCourses() {
+
+    }
+    
+    @FXML
+    void onRefresh() {
+    	rest.getCourses("");
     }
     
     @FXML
