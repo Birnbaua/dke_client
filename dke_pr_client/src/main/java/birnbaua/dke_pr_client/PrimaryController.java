@@ -45,7 +45,9 @@ public class PrimaryController {
     @FXML
     void onRefresh() {
     	courses.getItems().clear();
-    	courses.getItems().addAll(rest.getCourses("vl"));
+    	//courses.getItems().addAll(rest.getCourses(searchCoursesRest.getText()));
+    	System.out.println(searchCoursesRest.getText());
+    	//courses.getItems().addAll(rest.getCourses("vl"));
     }
     
     @FXML
