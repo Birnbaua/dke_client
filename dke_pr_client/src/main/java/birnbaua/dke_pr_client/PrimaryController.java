@@ -48,7 +48,7 @@ public class PrimaryController {
     void onRefresh() {
     	courses.getItems().clear();
     	courses.getItems().addAll(rest.getCourses(searchCoursesRest.getText()));
-    	System.out.println(searchCoursesRest.getText());
+    	//System.out.println(searchCoursesRest.getText());
     	//courses.getItems().addAll(rest.getCourses("vl"));
     }
     
