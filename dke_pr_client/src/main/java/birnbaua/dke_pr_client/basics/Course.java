@@ -22,11 +22,11 @@ public class Course {
 	}
 	
 	public Course(String name) {
-		this(name,"unknown","unknown","unknown",0,false);
+		this(name," - "," - "," - ",0,false);
 	}
 	
 	public Course() {
-		this("unknown","unknown","unknown","unknown",0,false);
+		this(" - "," - "," - "," - ",0,false);
 	}
 	
 

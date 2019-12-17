@@ -11,6 +11,11 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.google.gson.Gson;
+
+import birnbaua.dke_pr_client.basics.Course;
+import birnbaua.dke_pr_client.basics.JsonCourseConverter;
+import birnbaua.dke_pr_client.json.JsonHelper;
 import birnbaua.dke_pr_client.rest.ConnectionHelper;
 
 /**

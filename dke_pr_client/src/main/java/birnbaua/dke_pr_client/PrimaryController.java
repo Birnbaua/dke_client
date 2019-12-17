@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+
 import birnbaua.dke_pr_client.basics.Course;
 import birnbaua.dke_pr_client.basics.University;
 import birnbaua.dke_pr_client.rest.ConnectionHelper;
@@ -17,6 +18,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 
 public class PrimaryController {
@@ -45,7 +47,7 @@ public class PrimaryController {
     @FXML
     void onRefresh() {
     	courses.getItems().clear();
-    	//courses.getItems().addAll(rest.getCourses(searchCoursesRest.getText()));
+    	courses.getItems().addAll(rest.getCourses(searchCoursesRest.getText()));
     	System.out.println(searchCoursesRest.getText());
     	//courses.getItems().addAll(rest.getCourses("vl"));
     }
@@ -60,6 +62,11 @@ public class PrimaryController {
     	rest = new RestCall(properties);
     	courseTableSetup(myCourses);
     	courseTableSetup(courses);
+    	searchCoursesRest.setOnKeyPressed(value -> {
+    		if(value.getCode().equals(KeyCode.ENTER)) {
+    			onRefresh();
+    		}
+    	});
     	myCourses.getItems().add(new Course("weihnachtsmensa","6969","max muehler","drangln",6,false));
     }
    
