@@ -15,6 +15,12 @@ public class JerseyHelper<T> {
 		this.url = url;
 	}
 	
+	/**
+	 * Performes a GET on the URL given in the Constructor. The parameter is a query parameter and should be given in a format like: 'param=true'
+	 * @param param Query parameter
+	 * @return
+	 * @throws RuntimeException if statuscode != 200
+	 */
 	public String get(String param) throws RuntimeException{
 		Client client = Client.create();
 		WebResource webResource = null;
@@ -33,10 +39,22 @@ public class JerseyHelper<T> {
 		return fetched;
 	}
 	
+	/**
+	 * Performes a GET on the URL given in the Constructor.
+	 * @return
+	 * @throws RuntimeException RuntimeException if statuscode != 200
+	 */
 	public String get() throws RuntimeException{
 		return get(null);
 	}
 	
+	/**
+	 * Performes a Post on the URL given in the Constructor. The parameter is a query parameter and should be given in a format like: 'param=true'
+	 * @param t An object of T.
+	 * @param param Query parameter
+	 * @return
+	 * @throws RuntimeException RuntimeException if statuscode != 201
+	 */
 	public String post(T t, String param) throws RuntimeException{
 		Client client = Client.create();
 		WebResource webResource = null;
@@ -52,6 +70,12 @@ public class JerseyHelper<T> {
 		return response.getEntity(String.class);
 	}
 	
+	/**
+	 * Performes a Post on the URL given in the Constructor.
+	 * @param t An object of T.
+	 * @return
+	 * @throws RuntimeException RuntimeException if statuscode != 201
+	 */
 	public String post(T t) throws RuntimeException{
 		return post(t,null);
 	}

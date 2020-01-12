@@ -10,6 +10,10 @@ public class Student {
 		this.LASTNAME = last;
 		this.MATRNR = matr_nr;
 	}
+	
+	public Student() {
+		
+	}
 
 	public String getFIRSTNAME() {
 		return FIRSTNAME;
