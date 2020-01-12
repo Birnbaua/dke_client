@@ -14,9 +14,11 @@ import java.net.URL;
 import com.google.gson.Gson;
 
 import birnbaua.dke_pr_client.basics.Course;
-import birnbaua.dke_pr_client.basics.JsonCourseConverter;
+import birnbaua.dke_pr_client.basics.Student;
+import birnbaua.dke_pr_client.basics.BasicCourse;
 import birnbaua.dke_pr_client.json.JsonHelper;
 import birnbaua.dke_pr_client.rest.ConnectionHelper;
+import birnbaua.dke_pr_client.rest.JerseyHelper;
 
 /**
  * JavaFX App
@@ -25,15 +27,18 @@ public class App extends Application {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		/*
+		
 		try {
-			ConnectionHelper connHelp = new ConnectionHelper(new URL("http://90.146.27.135:8080/restdemo/webapi/myresource/getLVA/vl"));
-			System.out.println(connHelp.get());
+			JerseyHelper<Student> connHelp = new JerseyHelper<>("http://90.146.27.135:8080/restdemo/webapi/meta-service/jku/insertStudent");
+			connHelp.post(new Student("Maxd","Mühleer","12345623212311445287230"));
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch(RuntimeException e) {
+			e.printStackTrace();
 		}
-		*/
+		
+		
 		launch(); //launch javafx application
 	}
 	

@@ -1,6 +1,6 @@
 package birnbaua.dke_pr_client.basics;
 
-public class JsonCourseConverter {
+public class BasicCourse {
 	private String name;
 	private String id;
 	private String lector;
@@ -8,7 +8,7 @@ public class JsonCourseConverter {
 	private float ects;
 	private boolean isEnrolledBy;
 	
-	public JsonCourseConverter(String name, String id, String lector, String type, float ects, boolean isEnrolledBy) {
+	public BasicCourse(String name, String id, String lector, String type, float ects, boolean isEnrolledBy) {
 		this.name = name;
 		this.id = id;
 		this.lector = lector;
@@ -17,7 +17,7 @@ public class JsonCourseConverter {
 		this.isEnrolledBy = isEnrolledBy;
 	}
 	
-	public static Course toCourse(JsonCourseConverter c) {
+	public static Course toCourse(BasicCourse c) {
 		return new Course(c.name,c.id,c.lector,c.type,c.ects,c.isEnrolledBy);
 	}
 }
