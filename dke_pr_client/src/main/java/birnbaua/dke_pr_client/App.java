@@ -27,7 +27,7 @@ public class App extends Application {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+		/*
 		try {
 			JerseyHelper<Student> connHelp = new JerseyHelper<>("http://90.146.27.135:8080/restdemo/webapi/meta-service/jku/insertStudent");
 			connHelp.post(new Student("Maxd","Mühleer","12345623212311445287230"));
@@ -37,7 +37,7 @@ public class App extends Application {
 		} catch(RuntimeException e) {
 			e.printStackTrace();
 		}
-		
+		*/
 		
 		launch(); //launch javafx application
 	}

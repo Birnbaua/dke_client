@@ -8,6 +8,7 @@ import java.util.Properties;
 
 
 import birnbaua.dke_pr_client.basics.Course;
+import birnbaua.dke_pr_client.basics.Study;
 import birnbaua.dke_pr_client.basics.University;
 import birnbaua.dke_pr_client.rest.ConnectionHelper;
 import birnbaua.dke_pr_client.rest.RestCall;
@@ -23,7 +24,8 @@ import javafx.scene.text.Text;
 
 public class PrimaryController {
 
-    @FXML private ChoiceBox<University> studies;
+    @FXML private ChoiceBox<Study> studies;
+    @FXML private ChoiceBox<University> uni;
     @FXML private TextField searchMyCourses;
     @FXML private TableView<Course> myCourses;
     @FXML private TextField searchCoursesRest;
@@ -32,6 +34,9 @@ public class PrimaryController {
     @FXML private Text name;
     @FXML private Text matrNr;
     @FXML private Text university;
+    @FXML private TextField first_name;
+    @FXML private TextField last_name;
+    @FXML private Button login;
     private RestCall rest;
 
     @FXML

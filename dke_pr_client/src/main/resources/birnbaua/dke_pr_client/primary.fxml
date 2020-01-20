@@ -28,13 +28,54 @@
                      <left>
                         <VBox prefHeight="356.0" prefWidth="225.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Student details" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Student details:">
+                                 <VBox.margin>
+                                    <Insets bottom="6.0" />
+                                 </VBox.margin></Text>
+                              <HBox alignment="CENTER_LEFT">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="First Name: " />
+                                    <TextField fx:id="first_name" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="6.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name: " />
+                                    <TextField fx:id="last_name" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="6.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <Button fx:id="login" mnemonicParsing="false" text="Login" />
                            </children>
+                           <BorderPane.margin>
+                              <Insets right="2.0" />
+                           </BorderPane.margin>
                         </VBox>
                      </left>
                      <center>
                         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                            <children>
+                              <HBox alignment="TOP_CENTER" prefHeight="33.0" prefWidth="332.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="University">
+                                       <font>
+                                          <Font size="21.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <Separator prefWidth="200.0" />
+                              <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="332.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select University: " />
+                                    <ChoiceBox fx:id="uni" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
                               <HBox alignment="TOP_CENTER" prefHeight="33.0" prefWidth="332.0">
                                  <children>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Enrolled Studies">
@@ -52,6 +93,9 @@
                                  </children>
                               </HBox>
                            </children>
+                           <BorderPane.margin>
+                              <Insets left="2.0" />
+                           </BorderPane.margin>
                         </VBox>
                      </center>
                   </BorderPane>
@@ -81,7 +125,7 @@
                   </BorderPane>
                </content>
           </Tab>
-            <Tab text="Enroll">
+            <Tab text="Search">
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <top>
