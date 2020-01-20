@@ -1,8 +1,10 @@
 package birnbaua.dke_pr_client.rest;
 
 import java.net.MalformedURLException;
+import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -29,7 +31,7 @@ public class JerseyHelper<T> {
 		} else {
 			webResource = client.resource(url);
 		}
-		ClientResponse response = webResource.accept("application(json").get(ClientResponse.class);
+		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 		
 		if(response.getStatus() != 200) {
 			throw new RuntimeException("Failed with HTTP code: "+ response.getStatus());
@@ -78,5 +80,14 @@ public class JerseyHelper<T> {
 	 */
 	public String post(T t) throws RuntimeException{
 		return post(t,null);
+	}
+	
+	/**
+	 * 
+	 * @param json
+	 * @return
+	 */
+	public List<T> getObjects(String json) {
+		return new Gson().fromJson(json, new TypeToken<List<T>>() {}.getType());
 	}
 }

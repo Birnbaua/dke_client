@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.Properties;
 
 import birnbaua.dke_pr_client.basics.Course;
+import birnbaua.dke_pr_client.basics.University;
 import birnbaua.dke_pr_client.json.JsonHelper;
+import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 
 public class RestCall {
 	private final Properties properties;
@@ -28,5 +31,13 @@ public class RestCall {
 		JsonHelper<Course> json = new JsonHelper<>();
 		//return json.getObjectsFrom(json.parseList(connHelp.get(params)), Course.class);
 		return json.getCoursesFrom(json.parseList(connHelp.get(params)));
+	}
+	
+	public List<University> getUniversities(){
+		JerseyHelper<University> jersey = null;
+		try {
+			jersey = new JerseyHelper<University>(String.format("%s%s", properties.get("server").toString().replace("\"", ""),properties.get("universities").toString().replace("\"", "")));
+		} catch (MalformedURLException e) {e.printStackTrace(); return null;}
+		return jersey.getObjects(jersey.get());
 	}
 }
