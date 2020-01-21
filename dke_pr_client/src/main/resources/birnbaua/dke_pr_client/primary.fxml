@@ -118,7 +118,7 @@
                      <bottom>
                         <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                           <items>
-                            <Button mnemonicParsing="false" onAction="#onSaveMyCourses" text="Save Changes" />
+                            <Button fx:id="saveMyCourses" mnemonicParsing="false" onAction="#onSaveMyCourses" text="Save Changes" />
                           </items>
                         </ToolBar>
                      </bottom>
@@ -157,13 +157,13 @@
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <items>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Student: " />
-            <Text fx:id="name" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Name&gt;" />
+            <Text fx:id="name" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;name&gt;" />
             <Separator orientation="VERTICAL" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username: " />
             <Text fx:id="matrNr" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Matr. Nr&gt;" />
             <Separator orientation="VERTICAL" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="University: " />
-            <Text fx:id="university" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Uni&gt;" />
+            <Text fx:id="university" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;uni&gt;" />
          </items>
       </ToolBar>
    </top>

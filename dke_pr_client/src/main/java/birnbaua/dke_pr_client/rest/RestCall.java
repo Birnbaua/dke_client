@@ -8,8 +8,6 @@ import java.util.Properties;
 import birnbaua.dke_pr_client.basics.Course;
 import birnbaua.dke_pr_client.basics.University;
 import birnbaua.dke_pr_client.json.JsonHelper;
-import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
 
 public class RestCall {
 	private final Properties properties;

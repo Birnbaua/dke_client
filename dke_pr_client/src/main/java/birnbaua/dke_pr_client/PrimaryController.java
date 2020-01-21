@@ -6,12 +6,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.controlsfx.control.textfield.TextFields;
 
 import birnbaua.dke_pr_client.basics.Course;
 import birnbaua.dke_pr_client.basics.Study;
 import birnbaua.dke_pr_client.basics.University;
+import birnbaua.dke_pr_client.javafx.CustomView;
 import birnbaua.dke_pr_client.rest.ConnectionHelper;
 import birnbaua.dke_pr_client.rest.RestCall;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -37,7 +42,9 @@ public class PrimaryController {
     @FXML private TextField first_name;
     @FXML private TextField last_name;
     @FXML private Button login;
+    @FXML private Button saveMyCourses;
     private RestCall rest;
+    private ObservableList<Course> myCoursesList = FXCollections.observableArrayList();
 
     @FXML
     void onSaveMyCourses() {
@@ -59,24 +66,65 @@ public class PrimaryController {
     
     @FXML
     void initialize() {
+    	
     	Properties properties = new Properties();
     	try {
     		properties.load(new FileInputStream(new File(App.class.getResource("settings.properties").getPath()).getAbsolutePath()));
 			
 		} catch (IOException e) {e.printStackTrace();} 
     	rest = new RestCall(properties);
-    	courseTableSetup(myCourses);
+    	
+    	CustomView.applyFilter(myCourses, myCoursesList, searchMyCourses, courseTableSetup(myCourses));
+		TextFields.bindAutoCompletion(searchMyCourses, myCoursesList);
     	courseTableSetup(courses);
+    	
     	searchCoursesRest.setOnKeyPressed(value -> {
     		if(value.getCode().equals(KeyCode.ENTER)) {
     			onRefresh();
     		}
     	});
+    	
     	myCourses.getItems().add(new Course("weihnachtsmensa","6969","max muehler","drangln",6,false));
+    	this.uni.getItems().addListener((ListChangeListener<University>)(x) ->{
+    		if(this.uni.getItems().size() > 0) {
+    			setStudentDisable(false);
+    		} else {
+    			setStudentDisable(true);
+    		}
+    	});
+    	
+    	this.name.textProperty().addListener((a,o,n) -> {
+    		if(n.length() > 0 && n.charAt(0) == '<') {
+    			setDisableMyCourses(true);
+    		} else if(n.length() > 0) {
+    			setDisableMyCourses(false);
+    		} else {
+    			setDisableMyCourses(true);
+    		}
+    	});
+    	disableComponentsAtStartUp();
+    }
+    
+    private void disableComponentsAtStartUp() {
+    	setDisableMyCourses(true);
+    	setStudentDisable(true);
+    }
+    
+    private void setDisableMyCourses(boolean disable) {
+    	this.myCourses.setDisable(disable);
+    	this.searchMyCourses.setDisable(disable);
+    	this.saveMyCourses.setDisable(disable);
+    }
+    
+    private void setStudentDisable(boolean disable) {
+    	this.first_name.setDisable(disable);
+    	this.last_name.setDisable(disable);
+    	this.login.setDisable(disable);
+    	this.studies.setDisable(disable);
     }
    
     @SuppressWarnings("unchecked")
-	private void courseTableSetup(TableView<Course> table) {
+	private TableColumn<Course,?>[] courseTableSetup(TableView<Course> table) {
     	TableColumn<Course,String> title = new TableColumn<>("Title");
     	TableColumn<Course,String> id = new TableColumn<>("Course ID");
     	TableColumn<Course,String> type = new TableColumn<>("Type");
@@ -94,6 +142,7 @@ public class PrimaryController {
     	lector.setPrefWidth(50);
     	isEnrolledBy.setPrefWidth(50);
     	
+    	
     	title.setCellValueFactory(value -> value.getValue().getName());
     	id.setCellValueFactory(value -> value.getValue().getId());
     	type.setCellValueFactory(value -> value.getValue().getType());
@@ -103,5 +152,6 @@ public class PrimaryController {
     	
     	isEnrolledBy.setCellFactory(CheckBoxTableCell.forTableColumn(isEnrolledBy));
     	table.getColumns().addAll(title,id,type,ects,lector,isEnrolledBy);
+    	return table.getColumns().toArray(new TableColumn[table.getColumns().size()]);
     }
 }

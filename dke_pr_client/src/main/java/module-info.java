@@ -8,6 +8,7 @@ module birnbaua.dke_pr_client {
 	requires transitive javafx.base;
 	requires javafx.graphics;
 	requires jersey.client;
+	requires org.controlsfx.controls;
     opens birnbaua.dke_pr_client to javafx.fxml;
     exports birnbaua.dke_pr_client;
 }
