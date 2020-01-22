@@ -19,7 +19,9 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -42,6 +44,14 @@ public class PrimaryController {
     @FXML private TextField first_name;
     @FXML private TextField last_name;
     @FXML private Button login;
+    @FXML private Button create;
+    @FXML private Button delete;
+    @FXML private CheckBox voCheckBox;
+    @FXML private CheckBox ueCheckBox;
+    @FXML private CheckBox prCheckBox;
+    @FXML private CheckBox ksCheckBox;
+    @FXML private Spinner<Double> minEcts;
+    @FXML private Spinner<Double> maxEcts;
     @FXML private Button saveMyCourses;
     private RestCall rest;
     private ObservableList<Course> myCoursesList = FXCollections.observableArrayList();
@@ -54,6 +64,11 @@ public class PrimaryController {
     @FXML
     void onSaveCourses() {
 
+    }
+    
+    @FXML
+    void onMouseClickedStudies() {
+    	
     }
     
     @FXML
@@ -75,7 +90,7 @@ public class PrimaryController {
     	rest = new RestCall(properties);
     	
     	CustomView.applyFilter(myCourses, myCoursesList, searchMyCourses, courseTableSetup(myCourses));
-		TextFields.bindAutoCompletion(searchMyCourses, myCoursesList);
+		//TextFields.bindAutoCompletion(searchMyCourses, myCoursesList);
     	courseTableSetup(courses);
     	
     	searchCoursesRest.setOnKeyPressed(value -> {
@@ -84,7 +99,7 @@ public class PrimaryController {
     		}
     	});
     	
-    	myCourses.getItems().add(new Course("weihnachtsmensa","6969","max muehler","drangln",6,false));
+    	myCoursesList.add(new Course("weihnachtsmensa","6969","max muehler","drangln",6,false));
     	this.uni.getItems().addListener((ListChangeListener<University>)(x) ->{
     		if(this.uni.getItems().size() > 0) {
     			setStudentDisable(false);

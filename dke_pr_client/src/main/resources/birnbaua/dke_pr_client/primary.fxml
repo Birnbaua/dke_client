@@ -2,8 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
@@ -15,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="birnbaua.dke_pr_client.PrimaryController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="birnbaua.dke_pr_client.PrimaryController">
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -25,78 +27,98 @@
                      <padding>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </padding>
-                     <left>
-                        <VBox prefHeight="356.0" prefWidth="225.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Student details:">
-                                 <VBox.margin>
-                                    <Insets bottom="6.0" />
-                                 </VBox.margin></Text>
-                              <HBox alignment="CENTER_LEFT">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="First Name: " />
-                                    <TextField fx:id="first_name" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="6.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name: " />
-                                    <TextField fx:id="last_name" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="6.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <Button fx:id="login" mnemonicParsing="false" text="Login" />
-                           </children>
-                           <BorderPane.margin>
-                              <Insets right="2.0" />
-                           </BorderPane.margin>
-                        </VBox>
-                     </left>
                      <center>
-                        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                        <HBox prefHeight="100.0" BorderPane.alignment="CENTER">
                            <children>
-                              <HBox alignment="TOP_CENTER" prefHeight="33.0" prefWidth="332.0">
+                              <VBox prefHeight="552.0" prefWidth="288.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="University">
-                                       <font>
-                                          <Font size="21.0" />
-                                       </font>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Student details:">
+                                       <VBox.margin>
+                                          <Insets bottom="6.0" />
+                                       </VBox.margin>
                                     </Text>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="First Name: " />
+                                          <TextField fx:id="first_name" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="6.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name: " />
+                                          <TextField fx:id="last_name" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="6.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox prefWidth="200.0">
+                                       <children>
+                                          <Button fx:id="login" mnemonicParsing="false" text="Login" />
+                                          <Button fx:id="create" mnemonicParsing="false" text="Create">
+                                             <HBox.margin>
+                                                <Insets left="4.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button fx:id="delete" mnemonicParsing="false" text="Delete">
+                                             <HBox.margin>
+                                                <Insets left="4.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
                                  </children>
-                              </HBox>
-                              <Separator prefWidth="200.0" />
-                              <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="332.0">
+                                 <HBox.margin>
+                                    <Insets left="4.0" right="4.0" top="4.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <VBox prefHeight="200.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select University: " />
-                                    <ChoiceBox fx:id="uni" prefWidth="150.0" />
+                                    <HBox alignment="TOP_CENTER" prefHeight="33.0" prefWidth="332.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="University">
+                                             <font>
+                                                <Font size="21.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <Separator prefWidth="200.0" />
+                                    <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="332.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select University: " />
+                                          <ChoiceBox fx:id="uni" prefWidth="150.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="TOP_CENTER" prefHeight="33.0" prefWidth="332.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Enrolled Studies">
+                                             <font>
+                                                <Font size="21.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <Separator prefWidth="200.0" />
+                                    <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="332.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select Study: " />
+                                          <ChoiceBox fx:id="studies" prefWidth="150.0" />
+                                       </children>
+                                    </HBox>
+                                    <Separator prefWidth="200.0" />
+                                    <TableView fx:id="studiesTable" onMouseClicked="#onMouseClickedStudies" prefWidth="200.0" />
                                  </children>
-                              </HBox>
-                              <HBox alignment="TOP_CENTER" prefHeight="33.0" prefWidth="332.0">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Enrolled Studies">
-                                       <font>
-                                          <Font size="21.0" />
-                                       </font>
-                                    </Text>
-                                 </children>
-                              </HBox>
-                              <Separator prefWidth="200.0" />
-                              <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="332.0">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select Study: " />
-                                    <ChoiceBox fx:id="studies" prefWidth="150.0" />
-                                 </children>
-                              </HBox>
+                                 <HBox.margin>
+                                    <Insets top="4.0" />
+                                 </HBox.margin>
+                              </VBox>
                            </children>
-                           <BorderPane.margin>
-                              <Insets left="2.0" />
-                           </BorderPane.margin>
-                        </VBox>
+                        </HBox>
                      </center>
                   </BorderPane>
                </content>
@@ -134,6 +156,49 @@
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search: " />
                               <TextField fx:id="searchCoursesRest" />
                               <Button fx:id="refreshSearchResults" mnemonicParsing="false" onAction="#onRefresh" text="Refresh Results" />
+                              <HBox>
+                                 <children>
+                                    <VBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <CheckBox fx:id="voCheckBox" mnemonicParsing="false" selected="true" text="VO" />
+                                          <CheckBox fx:id="ueCheckBox" mnemonicParsing="false" selected="true" text="UE" />
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets right="4.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <VBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <CheckBox fx:id="prCheckBox" mnemonicParsing="false" selected="true" text="PR" />
+                                          <CheckBox fx:id="ksCheckBox" mnemonicParsing="false" selected="true" text="KS" />
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets right="4.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <VBox alignment="TOP_CENTER">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="min. ects" />
+                                          <Spinner fx:id="minEcts" editable="true" prefHeight="31.0" prefWidth="69.0" />
+                                       </children>
+                                       <opaqueInsets>
+                                          <Insets right="4.0" />
+                                       </opaqueInsets>
+                                       <HBox.margin>
+                                          <Insets right="4.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <VBox alignment="TOP_CENTER">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="max. ects" />
+                                          <Spinner fx:id="maxEcts" editable="true" prefHeight="31.0" prefWidth="69.0" />
+                                       </children>
+                                       <opaqueInsets>
+                                          <Insets left="4.0" right="4.0" />
+                                       </opaqueInsets>
+                                    </VBox>
+                                 </children>
+                              </HBox>
                            </items>
                         </ToolBar>
                      </top>
