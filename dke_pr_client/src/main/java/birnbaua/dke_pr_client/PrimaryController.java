@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 import org.controlsfx.control.textfield.TextFields;
@@ -18,6 +19,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -28,6 +32,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class PrimaryController {
 
@@ -87,7 +92,21 @@ public class PrimaryController {
     
     @FXML
     void onCreate() {
-    	
+    	UserController userController = null;
+    	Parent root;
+    	FXMLLoader loader;
+    	try {
+    		loader = new FXMLLoader(UserController.class.getResource("EditUser.fxml"));
+    		root = loader.load();
+    		userController = loader.getController();
+    		userController.setInformation(this.rest,this.uni.getValue());
+    		Stage stage = new Stage();
+    		stage.setTitle("USER");
+    		stage.setScene(new Scene(root));
+    		stage.showAndWait();
+    	} catch(IOException e) {
+    		e.printStackTrace();
+    	}
     }
     
     @FXML
@@ -125,9 +144,10 @@ public class PrimaryController {
     	
     	this.uni.valueProperty().addListener((a,o,n) -> {
     		if(n.getName().equalsIgnoreCase("all")) {
-    			setStudentDisable(false);
-    		} else {
     			setStudentDisable(true);
+    		} else {
+    			setStudentDisable(false);
+    			this.studies.getItems().addAll(this.rest.getAllStudies(n));
     		}
     	});
     	
@@ -160,6 +180,10 @@ public class PrimaryController {
     	this.uni.getSelectionModel().selectFirst();
     	this.studies.getItems().add(new Study("none"));
     	this.studies.getSelectionModel().selectFirst();
+    	
+    	//fetch all Unis of Meta Serivce
+    	this.uni.getItems().addAll(this.rest.getAllUniversities());
+    	
     	disableComponentsAtStartUp();
     }
     

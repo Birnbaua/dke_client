@@ -1,6 +1,7 @@
 package birnbaua.dke_pr_client.rest;
 
 import java.net.MalformedURLException;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -8,6 +9,8 @@ import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+
+import birnbaua.dke_pr_client.basics.University;
 
 public class JerseyHelper<T> {
 	private String url;
@@ -89,5 +92,14 @@ public class JerseyHelper<T> {
 	 */
 	public List<T> getObjects(String json) {
 		return new Gson().fromJson(json, new TypeToken<List<T>>() {}.getType());
+	}
+	
+	public List<University> getUniversities(String universities) {
+		List<University> unis = new LinkedList<>();
+		String[] arr = universities.replace("[", "").replace("]", "").replaceAll("\"", "").split(",");
+		for(String str : arr) {
+			unis.add(new University(str));
+		}
+		return unis;
 	}
 }

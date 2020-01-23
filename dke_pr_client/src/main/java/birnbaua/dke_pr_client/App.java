@@ -19,6 +19,7 @@ import birnbaua.dke_pr_client.basics.BasicCourse;
 import birnbaua.dke_pr_client.json.JsonHelper;
 import birnbaua.dke_pr_client.rest.ConnectionHelper;
 import birnbaua.dke_pr_client.rest.JerseyHelper;
+import birnbaua.dke_pr_client.rest.RestCall;
 
 /**
  * JavaFX App
@@ -38,6 +39,7 @@ public class App extends Application {
 			e.printStackTrace();
 		}
 		*/
+		
 		
 		launch(); //launch javafx application
 	}
