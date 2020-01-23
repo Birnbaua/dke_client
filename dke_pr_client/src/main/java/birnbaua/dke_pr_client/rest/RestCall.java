@@ -2,6 +2,7 @@ package birnbaua.dke_pr_client.rest;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -9,6 +10,7 @@ import birnbaua.dke_pr_client.basics.Course;
 import birnbaua.dke_pr_client.basics.Student;
 import birnbaua.dke_pr_client.basics.Study;
 import birnbaua.dke_pr_client.basics.University;
+import birnbaua.dke_pr_client.basics.enrolled.StudentCourseRelation;
 import birnbaua.dke_pr_client.json.JsonHelper;
 
 public class RestCall {
@@ -54,6 +56,47 @@ public class RestCall {
 		return jersey.getObjects(jersey.get());
 	}
 	
+	public String postStudentCourseRelation(Student student, List<Course> courses, University uni) {
+		List<StudentCourseRelation> src = new LinkedList<>();
+		for(Course course : courses) {
+			src.add(new StudentCourseRelation(student, course));
+		}
+		
+		/*
+		 * TODO request
+		 */
+		return null;
+	}
+	
+	public String deleteStudentCourseRelation(Student student, List<Course> courses, University uni) {
+		List<StudentCourseRelation> src = new LinkedList<>();
+		for(Course course : courses) {
+			src.add(new StudentCourseRelation(student, course));
+		}
+		
+		/*
+		 * TODO request
+		 */
+		return null;
+	}
+	
+	public List<Course> getCoursesOfStudent(Student student, University uni){
+		JerseyHelper<Course> jersey = null;
+		try {
+			/*
+			 * form uri
+			 */
+			
+			String uri = String.format("%s%s", properties.get("server").toString().replace("\"", ""),
+					properties.get("university").toString().replace("\"", "").replace("{uni}", "uni"));
+			System.out.println(uri);
+			jersey = new JerseyHelper<Course>(uri);
+		} catch (MalformedURLException e) {e.printStackTrace(); return null;}
+		return jersey.getObjects(jersey.get());
+	}
+	
+	
+	
 	public String createStudent(Student student, University uni) {
 		String response = null;
 		try {
@@ -65,10 +108,6 @@ public class RestCall {
 		} catch (MalformedURLException e) {e.printStackTrace();
 		} catch(RuntimeException e) {e.printStackTrace();}
 		return response;
-	}
-	
-	public boolean deleteStudent(Student student, University uni) {
-		return false;
 	}
 	
 	public String createStudy(Study study, University uni) {
