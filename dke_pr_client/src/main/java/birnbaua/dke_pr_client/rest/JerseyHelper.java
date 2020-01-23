@@ -94,6 +94,17 @@ public class JerseyHelper<T> {
 		return new Gson().fromJson(json, new TypeToken<List<T>>() {}.getType());
 	}
 	
+	public String delete(T t) throws RuntimeException {
+		Client client = Client.create();
+		WebResource webResource = null;
+		webResource = client.resource(url);
+		ClientResponse response = webResource.type("application/json").delete(ClientResponse.class, new Gson().toJson(t));
+		if(response.getStatus() != 200) {
+			throw new RuntimeException("Failed with HTTP code: "+ response.getStatus());
+		}
+		return response.getEntity(String.class);
+	}
+	
 	public List<University> getUniversities(String universities) {
 		List<University> unis = new LinkedList<>();
 		String[] arr = universities.replace("[", "").replace("]", "").replaceAll("\"", "").split(",");

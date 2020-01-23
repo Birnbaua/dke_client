@@ -5,6 +5,7 @@ import birnbaua.dke_pr_client.basics.University;
 import birnbaua.dke_pr_client.rest.RestCall;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
 public class UserController {
@@ -12,18 +13,29 @@ public class UserController {
     @FXML private TextField lastName;
     @FXML private TextField id;
     @FXML private Button save;
+    @FXML private ChoiceBox<University> universities;
     
     private RestCall rest = null;
-    private University uni = null;
+    private Student student = null;
     
-    public void setInformation(@SuppressWarnings("exports") RestCall rest, University uni) {
+    public void setInformation(@SuppressWarnings("exports") RestCall rest, ChoiceBox<University> universities) {
     	this.rest = rest;
-    	this.uni = uni;
+    	this.universities.getItems().addAll(universities.getItems());
+    	this.universities.setValue(universities.getValue());
+    	this.universities.valueProperty().addListener((a,o,n) -> {
+    		universities.setValue(n);
+    	});
     }
     
     @FXML
     void onSave() {
-    	rest.createStudent(new Student(this.firstName.getText(),this.lastName.getText(),this.id.getText()), this.uni);
+    	Student st = new Student(this.firstName.getText(),this.lastName.getText(),this.id.getText());
+    	rest.createStudent(st,this.universities.getValue());
+    	this.student = st;
+    }
+    
+    public Student getStudent() {
+    	return student;
     }
     
     @FXML

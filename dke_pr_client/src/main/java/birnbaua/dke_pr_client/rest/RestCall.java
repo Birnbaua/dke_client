@@ -24,6 +24,11 @@ public class RestCall {
 		return getCourses((String[]) null);
 	}
 	
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
 	public List<Course> getCourses(String...params) {
 		URL url = null;
 		try {
@@ -31,65 +36,126 @@ public class RestCall {
 		} catch (MalformedURLException e) {e.printStackTrace();}
 		ConnectionHelper connHelp = new ConnectionHelper(url);
 		JsonHelper<Course> json = new JsonHelper<>();
-		//return json.getObjectsFrom(json.parseList(connHelp.get(params)), Course.class);
 		return json.getCoursesFrom(json.parseList(connHelp.get(params)));
 	}
 	
+	/**
+	 * 
+	 * @return a list of all universities listed in the meta-service.
+	 */
 	public List<University> getAllUniversities(){
 		JerseyHelper<University> jersey = null;
+		String uri = properties.get("server").toString().replace("\"", "") + 
+			 	 	 properties.get("university").toString().replace("\"", "").replace("{uni}", "uni");
+		String response = null;
+		System.out.println("GET: " + uri);
 		try {
-			String uri = String.format("%s%s", properties.get("server").toString().replace("\"", ""),
-					properties.get("university").toString().replace("\"", "").replace("{uni}", "uni"));
 			jersey = new JerseyHelper<University>(uri);
-		} catch (MalformedURLException e) {e.printStackTrace(); return null;}
-		return jersey.getUniversities(jersey.get());
+			response = jersey.get();
+		} catch (MalformedURLException e) {e.printStackTrace();
+		} catch (RuntimeException e) {e.printStackTrace();}
+		return jersey.getUniversities(response);
 	}
 	
+	/**
+	 * 
+	 * @param student Student to be inserted
+	 * @param uni University in with the student should be created.
+	 * @return Response of the POST.
+	 */
+	public String createStudent(Student student, University uni) {
+		String uri = properties.get("server").toString().replace("\"", "") + 
+					 properties.get("university").toString().replace("\"", "").replace("{uni}", uni.getName()) + 
+					 "/insertStudent";
+		String response = null;
+		System.out.println("POST: " + uri);
+		try {
+			JerseyHelper<Student> jersey = new JerseyHelper<>(uri);
+			response = jersey.post(student);
+		} catch (MalformedURLException e) {e.printStackTrace();
+		} catch (RuntimeException e) {e.printStackTrace();}
+		return response;
+	}
+	
+	/**
+	 * 
+	 * @param uni
+	 * @return
+	 */
 	public List<Study> getAllStudies(University uni){
 		JerseyHelper<Study> jersey = null;
+		String uri = properties.get("server").toString().replace("\"", "") + 
+				 	 properties.get("university").toString().replace("\"", "").replace("{uni}", "studies");
+		String response = null;
+		System.out.println("GET: " + uri);
 		try {
-			String uri = String.format("%s%s", properties.get("server").toString().replace("\"", ""),
-					properties.get("university").toString().replace("\"", "").replace("{uni}", "uni"));
-			System.out.println(uri);
 			jersey = new JerseyHelper<Study>(uri);
-		} catch (MalformedURLException e) {e.printStackTrace(); return null;}
-		return jersey.getObjects(jersey.get());
+			response = jersey.get();
+		} catch (MalformedURLException e) {e.printStackTrace();
+		} catch (RuntimeException e) {e.printStackTrace();}
+		return jersey.getObjects(response);
 	}
 	
-	public String postStudentCourseRelation(Student student, List<Course> courses, University uni) {
-		List<StudentCourseRelation> src = new LinkedList<>();
+	/**
+	 * 
+	 * @param student Current Student of the session.
+	 * @param courses List of courses the student wants to be enrolled in.
+	 * @param uni University with offers these courses.
+	 * @return a list of Responses of the courses.
+	 */
+	public List<String> postStudentCourseRelation(Student student, List<Course> courses, University uni) {
+		List<String> response = new LinkedList<>();
+		JerseyHelper<StudentCourseRelation> jersey = null;
+		String uri = properties.get("server").toString().replace("\"", "") + 
+			 	 	 properties.get("university").toString().replace("\"", "").replace("{uni}", uni.getName()) + 
+			 	 	 "/courseRegistration";
+		System.out.println("POST: " + uri);
 		for(Course course : courses) {
-			src.add(new StudentCourseRelation(student, course));
+			try {
+				jersey = new JerseyHelper<>(uri);
+				response.add(jersey.post(new StudentCourseRelation(student, course)));
+			} catch (MalformedURLException e) {e.printStackTrace();
+			} catch (RuntimeException e) {e.printStackTrace();}
 		}
-		
-		/*
-		 * TODO request
-		 */
-		return null;
+		return response;
 	}
 	
-	public String deleteStudentCourseRelation(Student student, List<Course> courses, University uni) {
-		List<StudentCourseRelation> src = new LinkedList<>();
+	/**
+	 * 
+	 * @param student Current Student of the session.
+	 * @param courses List of courses the student wants to leave.
+	 * @param uni University with offers these courses.
+	 * @return a list of Responses of the courses.
+	 */
+	public List<String> deleteStudentCourseRelation(Student student, List<Course> courses, University uni) {
+		List<String> response = new LinkedList<>();
+		JerseyHelper<StudentCourseRelation> jersey = null;
+		String uri = properties.get("server").toString().replace("\"", "") + 
+			 	 	 properties.get("university").toString().replace("\"", "").replace("{uni}", uni.getName()) + 
+			 	 	 "/courseRegistration";
+		System.out.println("DELETE: " + uri);
 		for(Course course : courses) {
-			src.add(new StudentCourseRelation(student, course));
+			try {
+				jersey = new JerseyHelper<>(uri);
+				response.add(jersey.delete(new StudentCourseRelation(student, course)));
+			} catch (MalformedURLException e) {e.printStackTrace();
+			} catch (RuntimeException e) {e.printStackTrace();}
 		}
-		
-		/*
-		 * TODO request
-		 */
-		return null;
+		return response;
 	}
 	
+	/**
+	 * 
+	 * @param student Current Student of the session.
+	 * @param uni University of the student.
+	 * @return a list of courses in which the student is enrolled.
+	 */
 	public List<Course> getCoursesOfStudent(Student student, University uni){
 		JerseyHelper<Course> jersey = null;
+		String uri = properties.get("server").toString().replace("\"", "") + 
+				 	 properties.get("university").toString().replace("\"", "").replace("{uni}", "uni");
+		System.out.println(uri);
 		try {
-			/*
-			 * form uri
-			 */
-			
-			String uri = String.format("%s%s", properties.get("server").toString().replace("\"", ""),
-					properties.get("university").toString().replace("\"", "").replace("{uni}", "uni"));
-			System.out.println(uri);
 			jersey = new JerseyHelper<Course>(uri);
 		} catch (MalformedURLException e) {e.printStackTrace(); return null;}
 		return jersey.getObjects(jersey.get());
@@ -97,19 +163,9 @@ public class RestCall {
 	
 	
 	
-	public String createStudent(Student student, University uni) {
-		String response = null;
-		try {
-			String uri = String.format("%s%s", properties.get("server").toString().replace("\"", ""),
-					properties.get("university").toString().replace("\"", "").replace("{uni}", uni.getName()))+"/insertStudent";
-			System.out.print(uri);
-			JerseyHelper<Student> connHelp = new JerseyHelper<>(uri);
-			response = connHelp.post(student);
-		} catch (MalformedURLException e) {e.printStackTrace();
-		} catch(RuntimeException e) {e.printStackTrace();}
-		return response;
-	}
-	
+	/*
+	 * 
+	 */
 	public String createStudy(Study study, University uni) {
 		String response = null;
 		try {

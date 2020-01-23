@@ -2,21 +2,17 @@ package birnbaua.dke_pr_client;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 import java.util.Properties;
 
-import org.controlsfx.control.textfield.TextFields;
 
 import birnbaua.dke_pr_client.basics.Course;
+import birnbaua.dke_pr_client.basics.Student;
 import birnbaua.dke_pr_client.basics.Study;
 import birnbaua.dke_pr_client.basics.University;
 import birnbaua.dke_pr_client.javafx.CustomView;
-import birnbaua.dke_pr_client.rest.ConnectionHelper;
 import birnbaua.dke_pr_client.rest.RestCall;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -55,8 +51,8 @@ public class PrimaryController {
     @FXML private CheckBox ueCheckBox;
     @FXML private CheckBox prCheckBox;
     @FXML private CheckBox ksCheckBox;
-    @FXML private Spinner<Double> minEcts;
-    @FXML private Spinner<Double> maxEcts;
+    @FXML private Spinner<Integer> minEcts;
+    @FXML private Spinner<Integer> maxEcts;
     @FXML private Button saveMyCourses;
     @FXML private Button saveCourses;
     private RestCall rest;
@@ -99,11 +95,15 @@ public class PrimaryController {
     		loader = new FXMLLoader(UserController.class.getResource("EditUser.fxml"));
     		root = loader.load();
     		userController = loader.getController();
-    		userController.setInformation(this.rest,this.uni.getValue());
+    		userController.setInformation(this.rest,this.uni);
     		Stage stage = new Stage();
     		stage.setTitle("USER");
     		stage.setScene(new Scene(root));
     		stage.showAndWait();
+    		Student student = userController.getStudent();
+    		this.first_name.setText(student.getFIRSTNAME());
+    		this.last_name.setText(student.getLASTNAME());
+    		this.matrNr.setText(student.getMATRNR());
     	} catch(IOException e) {
     		e.printStackTrace();
     	}
