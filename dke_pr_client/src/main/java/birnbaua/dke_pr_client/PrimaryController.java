@@ -192,7 +192,10 @@ public class PrimaryController {
     			setStudentDisable(true);
     		} else {
     			setStudentDisable(false);
-    			this.studies.getItems().addAll(this.rest.getAllStudies(n));
+    			/*
+    			 * studies request
+    			 */
+    			//this.studies.getItems().addAll(this.rest.getAllStudies(n));
     		}
     	});
     	
