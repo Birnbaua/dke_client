@@ -127,7 +127,7 @@ public class RestCall {
 			response = jersey.get();
 		} catch (MalformedURLException e) {e.printStackTrace();
 		} catch (RuntimeException e) {e.printStackTrace();}
-		return jersey.getObjects(response);
+		return jersey.getStudies(response);
 	}
 	
 	/**

@@ -15,6 +15,7 @@ import com.sun.jersey.api.client.WebResource;
 
 import birnbaua.dke_pr_client.basics.Course;
 import birnbaua.dke_pr_client.basics.CourseForGUI;
+import birnbaua.dke_pr_client.basics.Study;
 import birnbaua.dke_pr_client.basics.University;
 
 public class JerseyHelper<T> {
@@ -90,13 +91,25 @@ public class JerseyHelper<T> {
 		return post(t,null);
 	}
 	
+	
+	
+	public String delete(T t) throws RuntimeException {
+		Client client = Client.create();
+		WebResource webResource = null;
+		webResource = client.resource(url);
+		ClientResponse response = webResource.type("application/json").delete(ClientResponse.class, new Gson().toJson(t));
+		if(response.getStatus() != 200) {
+			throw new RuntimeException("Failed with HTTP code: "+ response.getStatus());
+		}
+		return response.getEntity(String.class);
+	}
+	
 	/**
 	 * 
 	 * @param json
 	 * @return
 	 */
 	public List<T> getObjects(String json) {
-		//ArrayList<T> al = new Gson().fromJson(json, new TypeToken<List<T>>() {}.getType());
 		return new Gson().fromJson(json, new TypeToken<ArrayList<T>>(){}.getType());
 	}
 	
@@ -109,15 +122,13 @@ public class JerseyHelper<T> {
 		return courses;
 	}
 	
-	public String delete(T t) throws RuntimeException {
-		Client client = Client.create();
-		WebResource webResource = null;
-		webResource = client.resource(url);
-		ClientResponse response = webResource.type("application/json").delete(ClientResponse.class, new Gson().toJson(t));
-		if(response.getStatus() != 200) {
-			throw new RuntimeException("Failed with HTTP code: "+ response.getStatus());
+	public List<Study> getStudies(String json){
+		Study[] arr = new Gson().fromJson(json, Study[].class);
+		List<Study> studies = new LinkedList<>();
+		for(Study st : arr) {
+			studies.add(st);
 		}
-		return response.getEntity(String.class);
+		return studies;
 	}
 	
 	public List<University> getUniversities(String universities) {
