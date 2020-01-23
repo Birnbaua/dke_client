@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import birnbaua.dke_pr_client.basics.Course;
+import birnbaua.dke_pr_client.basics.CourseForGUI;
 
 public class JsonHelper<T> {
 	
@@ -26,14 +26,14 @@ public class JsonHelper<T> {
 		return new Gson().fromJson(json, new TypeToken<List<T>>() {}.getType());
 	}
 	
-	public List<Course> getCoursesFrom(String json){
-		List<Course> courses = new LinkedList<>();
+	public List<CourseForGUI> getCoursesFrom(String json){
+		List<CourseForGUI> courses = new LinkedList<>();
 		for(String str : json.split(",")) {
 			str = str.replace("[", "");
 			str = str.replace("]", "");
 			str = str.replace("{", "");
 			str = str.replace("}", "");
-			courses.add(new Course(str.split(":")[1]));
+			courses.add(new CourseForGUI(str.split(":")[1]));
 		}
 		return courses;
 		//return new Gson().fromJson(json, new TypeToken<List<Course>>() {}.getType());

@@ -1,80 +1,28 @@
 package birnbaua.dke_pr_client.basics;
 
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleStringProperty;
-
 public class Course {
-	private SimpleStringProperty name;
-	private SimpleStringProperty id;
-	private SimpleStringProperty lector;
-	private SimpleStringProperty type;
-	private SimpleFloatProperty ects;
-	private SimpleBooleanProperty isEnrolledBy;
+	private String name;
+	private String id;
+	private String lector;
+	private String type;
+	private float ects;
+	private boolean isEnrolledBy;
 	
-	public Course(String title, String id, String lector, String type, float ects, boolean isEnrolledBy) {
-		this.name = new SimpleStringProperty(title);
-		this.id = new SimpleStringProperty(id);
-		this.lector = new SimpleStringProperty(lector);
-		this.type = new SimpleStringProperty(type);
-		this.ects = new SimpleFloatProperty(ects);
-		this.isEnrolledBy = new SimpleBooleanProperty(isEnrolledBy);
-	}
-	
-	public Course(String name) {
-		this(name," - "," - "," - ",0,false);
-	}
-	
-	public Course() {
-		this(" - "," - "," - "," - ",0,false);
-	}
-	
-
-	public SimpleStringProperty getName() {
-		return name;
-	}
-
-	public void setName(SimpleStringProperty name) {
+	public Course(String name, String id, String lector, String type, float ects, boolean isEnrolledBy) {
 		this.name = name;
-	}
-
-	public SimpleStringProperty getId() {
-		return id;
-	}
-
-	public void setId(SimpleStringProperty id) {
 		this.id = id;
-	}
-
-	public SimpleStringProperty getLector() {
-		return lector;
-	}
-
-	public void setLector(SimpleStringProperty lector) {
 		this.lector = lector;
-	}
-
-	public SimpleStringProperty getType() {
-		return type;
-	}
-
-	public void setType(SimpleStringProperty type) {
 		this.type = type;
-	}
-
-	public SimpleBooleanProperty getIsEnrolledBy() {
-		return isEnrolledBy;
-	}
-
-	public void setIsEnrolledBy(SimpleBooleanProperty isEnrolledBy) {
+		this.ects = ects;
 		this.isEnrolledBy = isEnrolledBy;
 	}
-
-	public SimpleFloatProperty getEcts() {
-		return ects;
+	
+	public static CourseForGUI toCourse(Course c) {
+		return new CourseForGUI(c.name,c.id,c.lector,c.type,c.ects,c.isEnrolledBy);
 	}
-
-	public void setEcts(SimpleFloatProperty ects) {
-		this.ects = ects;
+	
+	@Override
+	public String toString() {
+		return String.format("Name: %s, ECTS: %f", name, ects);
 	}
 }

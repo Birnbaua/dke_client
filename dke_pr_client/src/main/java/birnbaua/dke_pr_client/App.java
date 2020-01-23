@@ -13,13 +13,14 @@ import java.net.URL;
 
 import com.google.gson.Gson;
 
-import birnbaua.dke_pr_client.basics.Course;
+import birnbaua.dke_pr_client.basics.CourseForGUI;
 import birnbaua.dke_pr_client.basics.Student;
-import birnbaua.dke_pr_client.basics.BasicCourse;
+import birnbaua.dke_pr_client.basics.Course;
 import birnbaua.dke_pr_client.json.JsonHelper;
 import birnbaua.dke_pr_client.rest.ConnectionHelper;
 import birnbaua.dke_pr_client.rest.JerseyHelper;
 import birnbaua.dke_pr_client.rest.RestCall;
+import birnbaua.dke_pr_client.test.Test;
 
 /**
  * JavaFX App
@@ -39,7 +40,7 @@ public class App extends Application {
 			e.printStackTrace();
 		}
 		*/
-		
+		Test.test();
 		
 		launch(); //launch javafx application
 	}

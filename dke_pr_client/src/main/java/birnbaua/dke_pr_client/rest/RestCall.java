@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-import birnbaua.dke_pr_client.basics.Course;
+import birnbaua.dke_pr_client.basics.CourseForGUI;
 import birnbaua.dke_pr_client.basics.Student;
 import birnbaua.dke_pr_client.basics.Study;
 import birnbaua.dke_pr_client.basics.University;
@@ -20,8 +20,8 @@ public class RestCall {
 		this.properties = properties;
 	}
 	
-	public List<Course> getCourses(University uni, String search, String coursetype, String lector, String id, int ects) {
-		JerseyHelper<Course> jersey = null;
+	public List<CourseForGUI> getCourses(University uni, String search, String coursetype, String lector, String id, int ects) {
+		JerseyHelper<CourseForGUI> jersey = null;
 		String uri = properties.get("server").toString().replace("\"", "") + 
 			 	 	 properties.get("courses").toString().replace("\"", "") + "?" +
 			 	 	 "uni=" + uni.getName() +
@@ -32,11 +32,11 @@ public class RestCall {
 		String response = null;
 		System.out.println("GET: " + uri);
 		try {
-			jersey = new JerseyHelper<Course>(uri);
+			jersey = new JerseyHelper<CourseForGUI>(uri);
 			response = jersey.get();
 		} catch (MalformedURLException e) {e.printStackTrace();
 		} catch (RuntimeException e) {e.printStackTrace();}
-		return jersey.getObjects(response);
+		return jersey.getCourses(response);
 	}
 	
 	/**
@@ -44,13 +44,13 @@ public class RestCall {
 	 * @param params
 	 * @return
 	 */
-	public List<Course> getCourses(String...params) {
+	public List<CourseForGUI> getCourses(String...params) {
 		URL url = null;
 		try {
 			url = new URL(String.format("%s%s", properties.get("server").toString().replace("\"", ""),properties.get("courses").toString().replace("\"", "")));
 		} catch (MalformedURLException e) {e.printStackTrace();}
 		ConnectionHelper connHelp = new ConnectionHelper(url);
-		JsonHelper<Course> json = new JsonHelper<>();
+		JsonHelper<CourseForGUI> json = new JsonHelper<>();
 		return json.getCoursesFrom(json.parseList(connHelp.get(params)));
 	}
 	
@@ -137,14 +137,14 @@ public class RestCall {
 	 * @param uni University with offers these courses.
 	 * @return a list of Responses of the courses.
 	 */
-	public List<String> postStudentCourseRelation(Student student, List<Course> courses, University uni) {
+	public List<String> postStudentCourseRelation(Student student, List<CourseForGUI> courses, University uni) {
 		List<String> response = new LinkedList<>();
 		JerseyHelper<StudentCourseRelation> jersey = null;
 		String uri = properties.get("server").toString().replace("\"", "") + 
 			 	 	 properties.get("university").toString().replace("\"", "").replace("{uni}", uni.getName()) + 
 			 	 	 "/courseRegistration";
 		System.out.println("POST: " + uri);
-		for(Course course : courses) {
+		for(CourseForGUI course : courses) {
 			try {
 				jersey = new JerseyHelper<>(uri);
 				response.add(jersey.post(new StudentCourseRelation(student, course)));
@@ -161,14 +161,14 @@ public class RestCall {
 	 * @param uni University with offers these courses.
 	 * @return a list of Responses of the courses.
 	 */
-	public List<String> deleteStudentCourseRelation(Student student, List<Course> courses, University uni) {
+	public List<String> deleteStudentCourseRelation(Student student, List<CourseForGUI> courses, University uni) {
 		List<String> response = new LinkedList<>();
 		JerseyHelper<StudentCourseRelation> jersey = null;
 		String uri = properties.get("server").toString().replace("\"", "") + 
 			 	 	 properties.get("university").toString().replace("\"", "").replace("{uni}", uni.getName()) + 
 			 	 	 "/courseRegistration";
 		System.out.println("DELETE: " + uri);
-		for(Course course : courses) {
+		for(CourseForGUI course : courses) {
 			try {
 				jersey = new JerseyHelper<>(uri);
 				response.add(jersey.delete(new StudentCourseRelation(student, course)));
@@ -184,15 +184,15 @@ public class RestCall {
 	 * @param uni University of the student.
 	 * @return a list of courses in which the student is enrolled.
 	 */
-	public List<Course> getCoursesOfStudent(Student student, University uni){
-		JerseyHelper<Course> jersey = null;
+	public List<CourseForGUI> getCoursesOfStudent(Student student, University uni){
+		JerseyHelper<CourseForGUI> jersey = null;
 		String uri = properties.get("server").toString().replace("\"", "") + 
 				 	 properties.get("university").toString().replace("\"", "").replace("{uni}", "uni");
 		System.out.println(uri);
 		try {
-			jersey = new JerseyHelper<Course>(uri);
+			jersey = new JerseyHelper<CourseForGUI>(uri);
 		} catch (MalformedURLException e) {e.printStackTrace(); return null;}
-		return jersey.getObjects(jersey.get());
+		return jersey.getCourses(jersey.get());
 	}
 	
 	

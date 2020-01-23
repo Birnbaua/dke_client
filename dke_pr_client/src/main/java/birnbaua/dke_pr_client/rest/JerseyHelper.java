@@ -1,15 +1,20 @@
 package birnbaua.dke_pr_client.rest;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+import birnbaua.dke_pr_client.basics.Course;
+import birnbaua.dke_pr_client.basics.CourseForGUI;
 import birnbaua.dke_pr_client.basics.University;
 
 public class JerseyHelper<T> {
@@ -91,7 +96,17 @@ public class JerseyHelper<T> {
 	 * @return
 	 */
 	public List<T> getObjects(String json) {
-		return new Gson().fromJson(json, new TypeToken<List<T>>() {}.getType());
+		//ArrayList<T> al = new Gson().fromJson(json, new TypeToken<List<T>>() {}.getType());
+		return new Gson().fromJson(json, new TypeToken<ArrayList<T>>(){}.getType());
+	}
+	
+	public List<CourseForGUI> getCourses(String json) {
+		Course[] arr = new Gson().fromJson(json, Course[].class);
+		List<CourseForGUI> courses = new LinkedList<>();
+		for(Course bc : arr) {
+			courses.add(Course.toCourse(bc));
+		}
+		return courses;
 	}
 	
 	public String delete(T t) throws RuntimeException {

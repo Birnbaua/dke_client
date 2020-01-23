@@ -7,8 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-
-import birnbaua.dke_pr_client.basics.Course;
+import birnbaua.dke_pr_client.basics.CourseForGUI;
 import birnbaua.dke_pr_client.basics.Student;
 import birnbaua.dke_pr_client.basics.Study;
 import birnbaua.dke_pr_client.basics.University;
@@ -39,10 +38,10 @@ public class PrimaryController {
     @FXML private ChoiceBox<Study> studies;
     @FXML private ChoiceBox<University> uni;
     @FXML private TextField searchMyCourses;
-    @FXML private TableView<Course> myCourses;
+    @FXML private TableView<CourseForGUI> myCourses;
     @FXML private TextField searchCoursesRest;
     @FXML private Button refreshSearchResults;
-    @FXML private TableView<Course> courses;
+    @FXML private TableView<CourseForGUI> courses;
     @FXML private Text name;
     @FXML private Text matrNr;
     @FXML private Text university;
@@ -62,12 +61,12 @@ public class PrimaryController {
     @FXML private Button saveCourses;
     private RestCall rest;
     private Student student;
-    private ObservableList<Course> myCoursesList = FXCollections.observableArrayList();
+    private ObservableList<CourseForGUI> myCoursesList = FXCollections.observableArrayList();
 
     @FXML
     void onSaveMyCourses() {
-    	List<Course> list = new LinkedList<>();
-    	for(Course c : this.myCoursesList) {
+    	List<CourseForGUI> list = new LinkedList<>();
+    	for(CourseForGUI c : this.myCoursesList) {
     		if(c.getIsEnrolledBy().get() == false) {
     			list.add(c);
     		}
@@ -78,8 +77,8 @@ public class PrimaryController {
     
     @FXML
     void onSaveCourses() {
-    	List<Course> list = new LinkedList<>();
-    	for(Course c : this.myCoursesList) {
+    	List<CourseForGUI> list = new LinkedList<>();
+    	for(CourseForGUI c : this.myCoursesList) {
     		if(c.getIsEnrolledBy().get() == true) {
     			list.add(c);
     		}
@@ -182,8 +181,8 @@ public class PrimaryController {
     		}
     	});
     	
-    	this.courses.getItems().addListener((ListChangeListener<Course>) (a) ->{
-    		for(Course c : a.getAddedSubList()) {
+    	this.courses.getItems().addListener((ListChangeListener<CourseForGUI>) (a) ->{
+    		for(CourseForGUI c : a.getAddedSubList()) {
     			setListener(c,this.saveCourses);
     		}
     	});
@@ -255,20 +254,20 @@ public class PrimaryController {
     	this.studies.setDisable(disable);
     }
     
-    private void setListener(Course course, Button button) {
+    private void setListener(CourseForGUI course, Button button) {
     	course.getIsEnrolledBy().addListener((a,o,n) -> {
     		button.setStyle("-fx-background-color: tomato; ");
     	});
     }
    
     @SuppressWarnings("unchecked")
-	private TableColumn<Course,?>[] courseTableSetup(TableView<Course> table) {
-    	TableColumn<Course,String> title = new TableColumn<>("Title");
-    	TableColumn<Course,String> id = new TableColumn<>("Course ID");
-    	TableColumn<Course,String> type = new TableColumn<>("Type");
-    	TableColumn<Course,Number> ects = new TableColumn<>("Ects");
-    	TableColumn<Course,String> lector = new TableColumn<>("Lector");
-    	TableColumn<Course,Boolean> isEnrolledBy = new TableColumn<>("Enrolled");
+	private TableColumn<CourseForGUI,?>[] courseTableSetup(TableView<CourseForGUI> table) {
+    	TableColumn<CourseForGUI,String> title = new TableColumn<>("Title");
+    	TableColumn<CourseForGUI,String> id = new TableColumn<>("Course ID");
+    	TableColumn<CourseForGUI,String> type = new TableColumn<>("Type");
+    	TableColumn<CourseForGUI,Number> ects = new TableColumn<>("Ects");
+    	TableColumn<CourseForGUI,String> lector = new TableColumn<>("Lector");
+    	TableColumn<CourseForGUI,Boolean> isEnrolledBy = new TableColumn<>("Enrolled");
     	
     	table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     	table.setEditable(true);
