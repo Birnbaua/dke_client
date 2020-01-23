@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="birnbaua.dke_pr_client.PrimaryController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="birnbaua.dke_pr_client.PrimaryController">
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -57,13 +57,13 @@
                                     </HBox>
                                     <HBox prefWidth="200.0">
                                        <children>
-                                          <Button fx:id="login" mnemonicParsing="false" text="Login" />
-                                          <Button fx:id="create" mnemonicParsing="false" text="Create">
+                                          <Button fx:id="login" mnemonicParsing="false" onAction="#onLogin" text="Login" />
+                                          <Button fx:id="create" mnemonicParsing="false" onAction="#onCreate" text="Create">
                                              <HBox.margin>
                                                 <Insets left="4.0" />
                                              </HBox.margin>
                                           </Button>
-                                          <Button fx:id="delete" mnemonicParsing="false" text="Delete">
+                                          <Button fx:id="delete" mnemonicParsing="false" onAction="#onDelete" text="Delete">
                                              <HBox.margin>
                                                 <Insets left="4.0" />
                                              </HBox.margin>
@@ -208,7 +208,7 @@
                      <bottom>
                         <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <items>
-                              <Button mnemonicParsing="false" onAction="#onSaveCourses" text="Save Changes" />
+                              <Button fx:id="saveCourses" mnemonicParsing="false" onAction="#onSaveCourses" text="Save Changes" />
                            </items>
                         </ToolBar>
                      </bottom>

@@ -53,21 +53,45 @@ public class PrimaryController {
     @FXML private Spinner<Double> minEcts;
     @FXML private Spinner<Double> maxEcts;
     @FXML private Button saveMyCourses;
+    @FXML private Button saveCourses;
     private RestCall rest;
     private ObservableList<Course> myCoursesList = FXCollections.observableArrayList();
 
     @FXML
     void onSaveMyCourses() {
-    	
+    	/*
+    	 * TODO send list to metaservice with new list of elisted courses
+    	 */
+
+    	this.saveMyCourses.setStyle("-fx-background-color: whitesmoke;");
     }
     
     @FXML
     void onSaveCourses() {
+    	/*
+    	 * TODO send list to metaservice with new list of elisted courses
+    	 */
 
+    	this.saveCourses.setStyle("-fx-background-color: whitesmoke;");
     }
     
     @FXML
     void onMouseClickedStudies() {
+    	
+    }
+    
+    @FXML
+    void onLogin() {
+    	
+    }
+    
+    @FXML
+    void onCreate() {
+    	
+    }
+    
+    @FXML
+    void onDelete() {
     	
     }
     
@@ -99,28 +123,48 @@ public class PrimaryController {
     		}
     	});
     	
-    	myCoursesList.add(new Course("weihnachtsmensa","6969","max muehler","drangln",6,false));
-    	this.uni.getItems().addListener((ListChangeListener<University>)(x) ->{
-    		if(this.uni.getItems().size() > 0) {
+    	this.uni.valueProperty().addListener((a,o,n) -> {
+    		if(n.getName().equalsIgnoreCase("all")) {
     			setStudentDisable(false);
     		} else {
     			setStudentDisable(true);
     		}
     	});
     	
+    	this.studies.valueProperty().addListener((a,o,n) -> {
+    		if(n.getName().equalsIgnoreCase("none")) {
+    			/*
+    			 * TODO get all courses of selected university
+    			 */
+    		} else {
+    			/*
+    			 * TODO get all courses of selected uni and study
+    			 */
+    		}
+    	});
+    	
     	this.name.textProperty().addListener((a,o,n) -> {
     		if(n.length() > 0 && n.charAt(0) == '<') {
+    			this.courses.getColumns().get(courses.getColumns().size()-1).setVisible(false);
     			setDisableMyCourses(true);
     		} else if(n.length() > 0) {
     			setDisableMyCourses(false);
+    			this.courses.getColumns().get(courses.getColumns().size()-1).setVisible(true);
     		} else {
+    			this.courses.getColumns().get(courses.getColumns().size()-1).setVisible(false);
     			setDisableMyCourses(true);
     		}
     	});
+    	
+    	this.uni.getItems().add(new University("all"));
+    	this.uni.getSelectionModel().selectFirst();
+    	this.studies.getItems().add(new Study("none"));
+    	this.studies.getSelectionModel().selectFirst();
     	disableComponentsAtStartUp();
     }
     
     private void disableComponentsAtStartUp() {
+		this.courses.getColumns().get(courses.getColumns().size()-1).setVisible(false);
     	setDisableMyCourses(true);
     	setStudentDisable(true);
     }
@@ -136,6 +180,12 @@ public class PrimaryController {
     	this.last_name.setDisable(disable);
     	this.login.setDisable(disable);
     	this.studies.setDisable(disable);
+    }
+    
+    private void setListener(Course course, Button button) {
+    	course.getIsEnrolledBy().addListener((a,o,n) -> {
+    		button.setStyle("-fx-background-color: tomato; ");
+    	});
     }
    
     @SuppressWarnings("unchecked")
