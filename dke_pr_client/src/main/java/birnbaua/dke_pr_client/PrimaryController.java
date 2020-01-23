@@ -3,6 +3,8 @@ package birnbaua.dke_pr_client;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
 
 
@@ -13,6 +15,7 @@ import birnbaua.dke_pr_client.basics.University;
 import birnbaua.dke_pr_client.javafx.CustomView;
 import birnbaua.dke_pr_client.rest.RestCall;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -44,6 +48,7 @@ public class PrimaryController {
     @FXML private Text university;
     @FXML private TextField first_name;
     @FXML private TextField last_name;
+    @FXML private TextField matrikelNr;
     @FXML private Button login;
     @FXML private Button create;
     @FXML private Button delete;
@@ -51,28 +56,35 @@ public class PrimaryController {
     @FXML private CheckBox ueCheckBox;
     @FXML private CheckBox prCheckBox;
     @FXML private CheckBox ksCheckBox;
-    @FXML private Spinner<Integer> minEcts;
-    @FXML private Spinner<Integer> maxEcts;
+    @FXML private CheckBox pjCheckBox;
+    @FXML private Spinner<Integer> ects;
     @FXML private Button saveMyCourses;
     @FXML private Button saveCourses;
     private RestCall rest;
+    private Student student;
     private ObservableList<Course> myCoursesList = FXCollections.observableArrayList();
 
     @FXML
     void onSaveMyCourses() {
-    	/*
-    	 * TODO send list to metaservice with new list of elisted courses
-    	 */
-
+    	List<Course> list = new LinkedList<>();
+    	for(Course c : this.myCoursesList) {
+    		if(c.getIsEnrolledBy().get() == false) {
+    			list.add(c);
+    		}
+    	}
+    	this.rest.deleteStudentCourseRelation(student, list, this.uni.getValue());
     	this.saveMyCourses.setStyle("-fx-background-color: whitesmoke;");
     }
     
     @FXML
     void onSaveCourses() {
-    	/*
-    	 * TODO send list to metaservice with new list of elisted courses
-    	 */
-
+    	List<Course> list = new LinkedList<>();
+    	for(Course c : this.myCoursesList) {
+    		if(c.getIsEnrolledBy().get() == true) {
+    			list.add(c);
+    		}
+    	}
+    	this.rest.postStudentCourseRelation(student, list, this.uni.getValue());
     	this.saveCourses.setStyle("-fx-background-color: whitesmoke;");
     }
     
@@ -83,7 +95,20 @@ public class PrimaryController {
     
     @FXML
     void onLogin() {
-    	
+    	this.uni.setDisable(true);
+    	this.student = new Student(this.first_name.getText(), this.last_name.getText(), this.matrikelNr.getText());
+    	this.myCoursesList.addAll(this.rest.getCoursesOfStudent(student, this.uni.getValue()));
+    }
+    
+    @FXML
+    void onLogout() {
+    	this.uni.setDisable(false);
+    	this.myCoursesList.clear();
+    	this.courses.getItems().clear();
+    	this.student = null;
+    	this.first_name.setText("");
+    	this.last_name.setText("");
+    	this.name.setText("<name>");
     }
     
     @FXML
@@ -104,6 +129,8 @@ public class PrimaryController {
     		this.first_name.setText(student.getFIRSTNAME());
     		this.last_name.setText(student.getLASTNAME());
     		this.matrNr.setText(student.getMATRNR());
+    		
+    		onLogin();
     	} catch(IOException e) {
     		e.printStackTrace();
     	}
@@ -111,15 +138,28 @@ public class PrimaryController {
     
     @FXML
     void onDelete() {
-    	
+    	this.rest.deleteStudentCourseRelation(student, this.rest.getCoursesOfStudent(student, this.uni.getValue()), this.uni.getValue());
+    	this.rest.deleteStudent(student, uni.getValue());
     }
     
     @FXML
     void onRefresh() {
     	courses.getItems().clear();
-    	courses.getItems().addAll(rest.getCourses(searchCoursesRest.getText()));
-    	//System.out.println(searchCoursesRest.getText());
-    	//courses.getItems().addAll(rest.getCourses("vl"));
+    	if(this.ksCheckBox.isSelected()) {
+        	rest.getCourses(uni.getValue(), searchCoursesRest.getText(), "ks", null, null, ects.getValue());
+    	}
+    	if(this.voCheckBox.isSelected()) {
+        	rest.getCourses(uni.getValue(), searchCoursesRest.getText(), "vo", null, null, ects.getValue());
+    	}
+    	if(this.ueCheckBox.isSelected()) {
+        	rest.getCourses(uni.getValue(), searchCoursesRest.getText(), "ue", null, null, ects.getValue());
+    	}
+    	if(this.prCheckBox.isSelected()) {
+        	rest.getCourses(uni.getValue(), searchCoursesRest.getText(), "pr", null, null, ects.getValue());
+    	}
+    	if(this.pjCheckBox.isSelected()) {
+        	rest.getCourses(uni.getValue(), searchCoursesRest.getText(), "pj", null, null, ects.getValue());
+    	}
     }
     
     @FXML
@@ -139,6 +179,12 @@ public class PrimaryController {
     	searchCoursesRest.setOnKeyPressed(value -> {
     		if(value.getCode().equals(KeyCode.ENTER)) {
     			onRefresh();
+    		}
+    	});
+    	
+    	this.courses.getItems().addListener((ListChangeListener<Course>) (a) ->{
+    		for(Course c : a.getAddedSubList()) {
+    			setListener(c,this.saveCourses);
     		}
     	});
     	
@@ -183,6 +229,8 @@ public class PrimaryController {
     	
     	//fetch all Unis of Meta Serivce
     	this.uni.getItems().addAll(this.rest.getAllUniversities());
+    	this.ects.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-1, 15));
+    	this.ects.getValueFactory().setValue(-1);
     	
     	disableComponentsAtStartUp();
     }
@@ -202,6 +250,7 @@ public class PrimaryController {
     private void setStudentDisable(boolean disable) {
     	this.first_name.setDisable(disable);
     	this.last_name.setDisable(disable);
+    	this.matrikelNr.setDisable(disable);
     	this.login.setDisable(disable);
     	this.studies.setDisable(disable);
     }

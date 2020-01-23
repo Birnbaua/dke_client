@@ -107,6 +107,9 @@ public class JerseyHelper<T> {
 	
 	public List<University> getUniversities(String universities) {
 		List<University> unis = new LinkedList<>();
+		if(universities == null) {
+			return unis;
+		}
 		String[] arr = universities.replace("[", "").replace("]", "").replaceAll("\"", "").split(",");
 		for(String str : arr) {
 			unis.add(new University(str));

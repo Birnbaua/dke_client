@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="birnbaua.dke_pr_client.PrimaryController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="662.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="birnbaua.dke_pr_client.PrimaryController">
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -55,6 +55,12 @@
                                           <Insets bottom="6.0" />
                                        </VBox.margin>
                                     </HBox>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Matrikel Nr: " />
+                                          <TextField fx:id="matrikelNr" />
+                                       </children>
+                                    </HBox>
                                     <HBox prefWidth="200.0">
                                        <children>
                                           <Button fx:id="login" mnemonicParsing="false" onAction="#onLogin" text="Login" />
@@ -64,6 +70,11 @@
                                              </HBox.margin>
                                           </Button>
                                           <Button fx:id="delete" mnemonicParsing="false" onAction="#onDelete" text="Delete">
+                                             <HBox.margin>
+                                                <Insets left="4.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#onLogout" text="Logout">
                                              <HBox.margin>
                                                 <Insets left="4.0" />
                                              </HBox.margin>
@@ -130,7 +141,7 @@
                         <ToolBar prefWidth="200.0" BorderPane.alignment="TOP_RIGHT">
                            <items>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search: " />
-                              <TextField fx:id="searchMyCourses" />
+                              <TextField fx:id="searchMyCourses" promptText="filter" />
                            </items>
                         </ToolBar>
                      </top>
@@ -154,7 +165,7 @@
                         <ToolBar prefWidth="200.0" BorderPane.alignment="TOP_RIGHT">
                            <items>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search: " />
-                              <TextField fx:id="searchCoursesRest" />
+                              <TextField fx:id="searchCoursesRest" promptText="search name" />
                               <Button fx:id="refreshSearchResults" mnemonicParsing="false" onAction="#onRefresh" text="Refresh Results" />
                               <HBox>
                                  <children>
@@ -176,10 +187,19 @@
                                           <Insets right="4.0" />
                                        </HBox.margin>
                                     </VBox>
+                                    <VBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <CheckBox fx:id="pjCheckBox" mnemonicParsing="false" selected="true" text="PJ">
+                                             <VBox.margin>
+                                                <Insets right="4.0" />
+                                             </VBox.margin>
+                                          </CheckBox>
+                                       </children>
+                                    </VBox>
                                     <VBox alignment="TOP_CENTER">
                                        <children>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="min. ects" />
-                                          <Spinner fx:id="minEcts" editable="true" prefHeight="31.0" prefWidth="69.0" />
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECTS" />
+                                          <Spinner fx:id="ects" editable="true" prefHeight="31.0" prefWidth="69.0" />
                                        </children>
                                        <opaqueInsets>
                                           <Insets right="4.0" />
@@ -187,15 +207,6 @@
                                        <HBox.margin>
                                           <Insets right="4.0" />
                                        </HBox.margin>
-                                    </VBox>
-                                    <VBox alignment="TOP_CENTER">
-                                       <children>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="max. ects" />
-                                          <Spinner fx:id="maxEcts" editable="true" prefHeight="31.0" prefWidth="69.0" />
-                                       </children>
-                                       <opaqueInsets>
-                                          <Insets left="4.0" right="4.0" />
-                                       </opaqueInsets>
                                     </VBox>
                                  </children>
                               </HBox>

@@ -20,8 +20,23 @@ public class RestCall {
 		this.properties = properties;
 	}
 	
-	public List<Course> getCourses() {
-		return getCourses((String[]) null);
+	public List<Course> getCourses(University uni, String search, String coursetype, String lector, String id, int ects) {
+		JerseyHelper<Course> jersey = null;
+		String uri = properties.get("server").toString().replace("\"", "") + 
+			 	 	 properties.get("courses").toString().replace("\"", "") + "?" +
+			 	 	 "uni=" + uni.getName() +
+			 	 	 "&search=" + search + 
+			 	 	 (id == null ? "": ("&id=" + id)) +
+			 	 	 "&coursetype=" + coursetype +
+			 	 	 (ects < 0 ? "":"&ects=" + ects);
+		String response = null;
+		System.out.println("GET: " + uri);
+		try {
+			jersey = new JerseyHelper<Course>(uri);
+			response = jersey.get();
+		} catch (MalformedURLException e) {e.printStackTrace();
+		} catch (RuntimeException e) {e.printStackTrace();}
+		return jersey.getObjects(response);
 	}
 	
 	/**
@@ -37,6 +52,25 @@ public class RestCall {
 		ConnectionHelper connHelp = new ConnectionHelper(url);
 		JsonHelper<Course> json = new JsonHelper<>();
 		return json.getCoursesFrom(json.parseList(connHelp.get(params)));
+	}
+	
+	public String deleteStudent(Student student, University uni) {
+		String response = null;
+		JerseyHelper<Student> jersey = null;
+		/*
+		 * TODO anpassen der uri
+		 */
+		String uri = properties.get("server").toString().replace("\"", "") + 
+			 	 	 properties.get("university").toString().replace("\"", "").replace("{uni}", uni.getName()) + 
+			 	 	 "/courseRegistration";
+		System.out.println("DELETE: " + uri);
+		try {
+			jersey = new JerseyHelper<>(uri);
+			response = jersey.delete(student);
+		} catch (MalformedURLException e) {e.printStackTrace();
+		} catch (RuntimeException e) {e.printStackTrace();}
+		
+		return response;
 	}
 	
 	/**
