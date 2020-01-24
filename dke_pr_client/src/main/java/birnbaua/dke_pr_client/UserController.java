@@ -3,10 +3,13 @@ package birnbaua.dke_pr_client;
 import birnbaua.dke_pr_client.basics.Student;
 import birnbaua.dke_pr_client.basics.University;
 import birnbaua.dke_pr_client.rest.RestCall;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class UserController {
     @FXML private TextField firstName;
@@ -28,10 +31,13 @@ public class UserController {
     }
     
     @FXML
-    void onSave() {
+    void onSave(ActionEvent event) {
     	Student st = new Student(this.firstName.getText(),this.lastName.getText(),this.id.getText());
     	rest.createStudent(st,this.universities.getValue());
     	this.student = st;
+    	Node  source = (Node)  event.getSource(); 
+        Stage stage  = (Stage) source.getScene().getWindow();
+        stage.close();
     }
     
     public Student getStudent() {

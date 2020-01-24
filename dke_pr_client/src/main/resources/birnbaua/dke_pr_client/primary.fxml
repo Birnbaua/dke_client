@@ -60,6 +60,9 @@
                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Matrikel Nr: " />
                                           <TextField fx:id="matrikelNr" />
                                        </children>
+                                       <VBox.margin>
+                                          <Insets bottom="4.0" />
+                                       </VBox.margin>
                                     </HBox>
                                     <HBox prefWidth="200.0">
                                        <children>
@@ -69,12 +72,7 @@
                                                 <Insets left="4.0" />
                                              </HBox.margin>
                                           </Button>
-                                          <Button fx:id="delete" mnemonicParsing="false" onAction="#onDelete" text="Delete">
-                                             <HBox.margin>
-                                                <Insets left="4.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#onLogout" text="Logout">
+                                          <Button fx:id="logout" mnemonicParsing="false" onAction="#onLogout" text="Logout">
                                              <HBox.margin>
                                                 <Insets left="4.0" />
                                              </HBox.margin>
@@ -107,7 +105,12 @@
                                     </HBox>
                                     <HBox alignment="TOP_CENTER" prefHeight="33.0" prefWidth="332.0">
                                        <children>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Enrolled Studies">
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Studies of ">
+                                             <font>
+                                                <Font size="21.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="uniDesc" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;uni&gt;">
                                              <font>
                                                 <Font size="21.0" />
                                              </font>

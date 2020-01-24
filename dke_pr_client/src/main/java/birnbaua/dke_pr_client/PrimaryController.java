@@ -45,6 +45,7 @@ public class PrimaryController {
     @FXML private Text name;
     @FXML private Text matrNr;
     @FXML private Text university;
+    @FXML private Text uniDesc;
     @FXML private TextField first_name;
     @FXML private TextField last_name;
     @FXML private TextField matrikelNr;
@@ -95,6 +96,9 @@ public class PrimaryController {
     @FXML
     void onLogin() {
     	this.uni.setDisable(true);
+    	setDisableMyCourses(false);
+    	this.name.setText(first_name.getText() + " " + last_name.getText());
+    	this.matrNr.setText(this.matrikelNr.getText());
     	this.student = new Student(this.first_name.getText(), this.last_name.getText(), this.matrikelNr.getText());
     	this.myCoursesList.addAll(this.rest.getCoursesOfStudent(student, this.uni.getValue()));
     }
@@ -127,7 +131,7 @@ public class PrimaryController {
     		Student student = userController.getStudent();
     		this.first_name.setText(student.getFIRSTNAME());
     		this.last_name.setText(student.getLASTNAME());
-    		this.matrNr.setText(student.getMATRNR());
+    		this.matrikelNr.setText(student.getMATRNR());
     		
     		onLogin();
     	} catch(IOException e) {
@@ -135,11 +139,16 @@ public class PrimaryController {
     	}
     }
     
+    /*
+     * is not going to be used
+     */
+    /*
     @FXML
     void onDelete() {
     	this.rest.deleteStudentCourseRelation(student, this.rest.getCoursesOfStudent(student, this.uni.getValue()), this.uni.getValue());
     	this.rest.deleteStudent(student, uni.getValue());
     }
+    */
     
     @FXML
     void onRefresh() {
@@ -192,12 +201,15 @@ public class PrimaryController {
     			setStudentDisable(true);
     		} else {
     			setStudentDisable(false);
+    			this.university.setText(n.getName());
+    			this.uniDesc.setText(this.uni.getValue().getName());
     			/*
     			 * studies request
     			 */
     			//this.studies.getItems().addAll(this.rest.getAllStudies(n));
     		}
     	});
+    	
     	
     	this.studies.valueProperty().addListener((a,o,n) -> {
     		if(n.getName().equalsIgnoreCase("none")) {
@@ -210,6 +222,7 @@ public class PrimaryController {
     			 */
     		}
     	});
+    	
     	
     	this.name.textProperty().addListener((a,o,n) -> {
     		if(n.length() > 0 && n.charAt(0) == '<') {
