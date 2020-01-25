@@ -1,13 +1,10 @@
-package birnbaua.dke_pr_client.basics.enrolled;
-
-import birnbaua.dke_pr_client.basics.CourseForGUI;
-import birnbaua.dke_pr_client.basics.Student;
+package birnbaua.dke_pr_client.basics;
 
 public class StudentCourseRelation {
 	private Student student;
-	private CourseForGUI course;
+	private Course course;
 	
-	public StudentCourseRelation(Student student, CourseForGUI course) {
+	public StudentCourseRelation(Student student, Course course) {
 		this.setStudent(student);
 		this.setCourse(course);
 	}
@@ -24,11 +21,11 @@ public class StudentCourseRelation {
 		this.student = student;
 	}
 
-	public CourseForGUI getCourse() {
+	public Course getCourse() {
 		return course;
 	}
 
-	public void setCourse(CourseForGUI course) {
+	public void setCourse(Course course) {
 		this.course = course;
 	}
 	

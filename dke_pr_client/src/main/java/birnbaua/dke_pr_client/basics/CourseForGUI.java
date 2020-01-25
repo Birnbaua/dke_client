@@ -77,4 +77,8 @@ public class CourseForGUI {
 	public void setEcts(SimpleFloatProperty ects) {
 		this.ects = ects;
 	}
+	
+	public Course toCourse() {
+		return new Course(name.get(),id.get(),lector.get(),type.get(),ects.get(),isEnrolledBy.get());
+	}
 }

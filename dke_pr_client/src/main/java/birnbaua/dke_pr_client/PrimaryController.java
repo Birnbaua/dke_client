@@ -79,12 +79,14 @@ public class PrimaryController {
     @FXML
     void onSaveCourses() {
     	List<CourseForGUI> list = new LinkedList<>();
-    	for(CourseForGUI c : this.myCoursesList) {
+    	for(CourseForGUI c : this.courses.getItems()) {
     		if(c.getIsEnrolledBy().get() == true) {
     			list.add(c);
     		}
     	}
     	this.rest.postStudentCourseRelation(student, list, this.uni.getValue());
+    	this.myCoursesList.clear();
+    	this.myCoursesList.addAll(this.rest.getCoursesOfStudent(student, uni.getValue()));
     	this.saveCourses.setStyle("-fx-background-color: whitesmoke;");
     }
     
@@ -154,19 +156,19 @@ public class PrimaryController {
     void onRefresh() {
     	courses.getItems().clear();
     	if(this.ksCheckBox.isSelected()) {
-        	rest.getCourses(uni.getValue(), searchCoursesRest.getText(), "ks", null, null, ects.getValue());
+        	courses.getItems().addAll(rest.getCourses(uni.getValue(), searchCoursesRest.getText(), "ks", null, null, ects.getValue()));
     	}
     	if(this.voCheckBox.isSelected()) {
-        	rest.getCourses(uni.getValue(), searchCoursesRest.getText(), "vo", null, null, ects.getValue());
+    		courses.getItems().addAll(rest.getCourses(uni.getValue(), searchCoursesRest.getText(), "vo", null, null, ects.getValue()));
     	}
     	if(this.ueCheckBox.isSelected()) {
-        	rest.getCourses(uni.getValue(), searchCoursesRest.getText(), "ue", null, null, ects.getValue());
+    		courses.getItems().addAll(rest.getCourses(uni.getValue(), searchCoursesRest.getText(), "ue", null, null, ects.getValue()));
     	}
     	if(this.prCheckBox.isSelected()) {
-        	rest.getCourses(uni.getValue(), searchCoursesRest.getText(), "pr", null, null, ects.getValue());
+    		courses.getItems().addAll(rest.getCourses(uni.getValue(), searchCoursesRest.getText(), "pr", null, null, ects.getValue()));
     	}
     	if(this.pjCheckBox.isSelected()) {
-        	rest.getCourses(uni.getValue(), searchCoursesRest.getText(), "pj", null, null, ects.getValue());
+    		courses.getItems().addAll(rest.getCourses(uni.getValue(), searchCoursesRest.getText(), "pj", null, null, ects.getValue()));
     	}
     }
     
@@ -191,6 +193,7 @@ public class PrimaryController {
     	});
     	
     	this.courses.getItems().addListener((ListChangeListener<CourseForGUI>) (a) ->{
+    		a.next();
     		for(CourseForGUI c : a.getAddedSubList()) {
     			setListener(c,this.saveCourses);
     		}

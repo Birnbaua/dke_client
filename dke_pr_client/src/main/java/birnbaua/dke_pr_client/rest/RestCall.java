@@ -8,9 +8,9 @@ import java.util.Properties;
 
 import birnbaua.dke_pr_client.basics.CourseForGUI;
 import birnbaua.dke_pr_client.basics.Student;
+import birnbaua.dke_pr_client.basics.StudentCourseRelation;
 import birnbaua.dke_pr_client.basics.Study;
 import birnbaua.dke_pr_client.basics.University;
-import birnbaua.dke_pr_client.basics.enrolled.StudentCourseRelation;
 import birnbaua.dke_pr_client.json.JsonHelper;
 
 public class RestCall {
@@ -20,14 +20,14 @@ public class RestCall {
 		this.properties = properties;
 	}
 	
-	public List<CourseForGUI> getCourses(University uni, String search, String coursetype, String lector, String id, int ects) {
+	public List<CourseForGUI> getCourses(University uni, String name, String coursetype, String lector, String id, int ects) {
 		JerseyHelper<CourseForGUI> jersey = null;
 		String uri = properties.get("server").toString().replace("\"", "") + 
 			 	 	 properties.get("courses").toString().replace("\"", "") + "?" +
-			 	 	 "uni=" + uni.getName() +
-			 	 	 "&search=" + search + 
+			 	 	 "uni=" + uni.getName().toLowerCase() +
+			 	 	 (name == null ? "":"&name=" + name) + 
 			 	 	 (id == null ? "": ("&id=" + id)) +
-			 	 	 "&coursetype=" + coursetype +
+			 	 	 "&coursetype=" + coursetype.toLowerCase() +
 			 	 	 (ects < 0 ? "":"&ects=" + ects);
 		String response = null;
 		System.out.println("GET: " + uri);
@@ -147,7 +147,7 @@ public class RestCall {
 		for(CourseForGUI course : courses) {
 			try {
 				jersey = new JerseyHelper<>(uri);
-				response.add(jersey.post(new StudentCourseRelation(student, course)));
+				response.add(jersey.post(new StudentCourseRelation(student, course.toCourse())));
 			} catch (MalformedURLException e) {e.printStackTrace();
 			} catch (RuntimeException e) {e.printStackTrace();}
 		}
@@ -171,7 +171,7 @@ public class RestCall {
 		for(CourseForGUI course : courses) {
 			try {
 				jersey = new JerseyHelper<>(uri);
-				response.add(jersey.delete(new StudentCourseRelation(student, course)));
+				response.add(jersey.delete(new StudentCourseRelation(student, course.toCourse())));
 			} catch (MalformedURLException e) {e.printStackTrace();
 			} catch (RuntimeException e) {e.printStackTrace();}
 		}

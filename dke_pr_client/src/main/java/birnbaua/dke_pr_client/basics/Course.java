@@ -25,4 +25,5 @@ public class Course {
 	public String toString() {
 		return String.format("Name: %s, ECTS: %f", name, ects);
 	}
+	
 }
