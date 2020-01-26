@@ -24,10 +24,10 @@ public class RestCall {
 		JerseyHelper<CourseForGUI> jersey = null;
 		String uri = properties.get("server").toString().replace("\"", "") + 
 			 	 	 properties.get("courses").toString().replace("\"", "") + "?" +
-			 	 	 "uni=" + uni.getName().toLowerCase() +
-			 	 	 (name == null ? "":"&name=" + name) + 
+			 	 	 (uni.getName().equals("all") ? "":"uni=" + uni.getName().toLowerCase()) +
+			 	 	 (name == null || name.length() == 0 ? "":"&name=" + name) + 
 			 	 	 (id == null ? "": ("&id=" + id)) +
-			 	 	 "&coursetype=" + coursetype.toLowerCase() +
+			 	 	 (coursetype == null ? "" :"&coursetype=" + coursetype.toLowerCase()) +
 			 	 	 (ects < 0 ? "":"&ects=" + ects);
 		String response = null;
 		System.out.println("GET: " + uri);
