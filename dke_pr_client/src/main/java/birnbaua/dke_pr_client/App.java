@@ -40,7 +40,7 @@ public class App extends Application {
 			e.printStackTrace();
 		}
 		*/
-		Test.test();
+		//Test.test();
 		
 		launch(); //launch javafx application
 	}

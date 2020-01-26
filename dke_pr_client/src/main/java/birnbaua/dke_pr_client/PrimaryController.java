@@ -73,7 +73,9 @@ public class PrimaryController {
     		}
     	}
     	this.rest.deleteStudentCourseRelation(student, list, this.uni.getValue());
-    	this.saveMyCourses.setStyle("-fx-background-color: whitesmoke;");
+    	this.myCoursesList.clear();
+    	this.myCoursesList.addAll(this.rest.getCoursesOfStudent(student, uni.getValue()));
+    	this.saveCourses.setStyle("-fx-background-color: whitesmoke;");
     }
     
     @FXML
@@ -101,6 +103,7 @@ public class PrimaryController {
     	setDisableMyCourses(false);
     	this.name.setText(first_name.getText() + " " + last_name.getText());
     	this.matrNr.setText(this.matrikelNr.getText());
+    	this.myCoursesList.clear();
     	this.student = new Student(this.first_name.getText(), this.last_name.getText(), this.matrikelNr.getText());
     	this.myCoursesList.addAll(this.rest.getCoursesOfStudent(student, this.uni.getValue()));
     }
@@ -113,6 +116,7 @@ public class PrimaryController {
     	this.student = null;
     	this.first_name.setText("");
     	this.last_name.setText("");
+    	this.matrikelNr.setText("");
     	this.name.setText("<name>");
     }
     
@@ -196,6 +200,13 @@ public class PrimaryController {
     		a.next();
     		for(CourseForGUI c : a.getAddedSubList()) {
     			setListener(c,this.saveCourses);
+    		}
+    	});
+    	
+    	this.myCoursesList.addListener((ListChangeListener<CourseForGUI>) (a) ->{
+    		a.next();
+    		for(CourseForGUI c : a.getAddedSubList()) {
+    			setListener(c,this.saveMyCourses);
     		}
     	});
     	

@@ -187,12 +187,15 @@ public class RestCall {
 	public List<CourseForGUI> getCoursesOfStudent(Student student, University uni){
 		JerseyHelper<CourseForGUI> jersey = null;
 		String uri = properties.get("server").toString().replace("\"", "") + 
-				 	 properties.get("university").toString().replace("\"", "").replace("{uni}", "uni");
-		System.out.println(uri);
+				 	 properties.get("university").toString().replace("\"", "").replace("{uni}", uni.getName().toLowerCase()) +
+				 	String.format("/studentCourses?firstname=%s&lastname=%s&matrikelNr=%s", student.getFIRSTNAME(), student.getLASTNAME(),student.getMATRNR());
+		System.out.println("GET: " + uri);
 		try {
 			jersey = new JerseyHelper<CourseForGUI>(uri);
 		} catch (MalformedURLException e) {e.printStackTrace(); return null;}
-		return jersey.getCourses(jersey.get());
+		List<CourseForGUI> courses = jersey.getCourses(jersey.get());
+		courses.forEach(x -> x.getIsEnrolledBy().set(true));
+		return courses;
 	}
 	
 	
