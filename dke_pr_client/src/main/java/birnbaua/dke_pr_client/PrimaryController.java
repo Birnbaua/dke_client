@@ -75,6 +75,12 @@ public class PrimaryController {
     	this.rest.deleteStudentCourseRelation(student, list, this.uni.getValue());
     	this.myCoursesList.clear();
     	this.myCoursesList.addAll(this.rest.getCoursesOfStudent(student, uni.getValue()));
+    	this.courses.getItems().forEach(x -> {
+    		x.getIsEnrolledBy().set(false);
+    		if(this.myCoursesList.contains(x)) {
+        		x.getIsEnrolledBy().set(true);
+    		}
+    	});
     	this.saveCourses.setStyle("-fx-background-color: whitesmoke;");
     }
     
@@ -199,6 +205,9 @@ public class PrimaryController {
     	this.courses.getItems().addListener((ListChangeListener<CourseForGUI>) (a) ->{
     		a.next();
     		for(CourseForGUI c : a.getAddedSubList()) {
+    			if(this.myCoursesList.contains(c)) {
+    	    		c.getIsEnrolledBy().set(true);
+    			}
     			setListener(c,this.saveCourses);
     		}
     	});

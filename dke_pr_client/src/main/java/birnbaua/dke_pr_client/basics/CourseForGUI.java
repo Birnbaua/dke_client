@@ -78,6 +78,16 @@ public class CourseForGUI {
 		this.ects = ects;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof CourseForGUI) {
+			if(((CourseForGUI)obj).name.get().equalsIgnoreCase((this.name.get()))) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public Course toCourse() {
 		return new Course(name.get(),id.get(),lector.get(),type.get(),ects.get(),isEnrolledBy.get());
 	}
