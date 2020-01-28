@@ -123,6 +123,7 @@ public class PrimaryController {
     	this.first_name.setText("");
     	this.last_name.setText("");
     	this.matrikelNr.setText("");
+    	this.matrNr.setText("<matrNR>");
     	this.name.setText("<name>");
     }
     
@@ -222,6 +223,7 @@ public class PrimaryController {
     	this.uni.valueProperty().addListener((a,o,n) -> {
     		if(n.getName().equalsIgnoreCase("all")) {
     			setStudentDisable(true);
+    			this.university.setText(this.uni.getValue().getName());
     		} else {
     			setStudentDisable(false);
     			this.university.setText(n.getName());
